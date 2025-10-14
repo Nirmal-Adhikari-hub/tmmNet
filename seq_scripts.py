@@ -27,7 +27,9 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
     # use a monotonically increasing global step for WANDB train curves
     global_step_base = epoch_idx * len(loader)
 
-    for batch_idx, data in enumerate(tqdm(loader)):
+    pbar = tqdm(loader, total=len(loader), dynamic_ncols=True, leave=False, disable=not is_main_process())
+
+    for batch_idx, data in enumerate(pbar):
         vid = device.data_to_device(data[0])
         vid_lgt = device.data_to_device(data[1])
         label = device.data_to_device(data[2])
@@ -54,9 +56,13 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
 
         loss_value.append(loss.item())
         if batch_idx % recoder.log_interval == 0 and is_main_process():
-            recoder.print_log(
-                '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
-                    .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
+            # recoder.print_log(
+            #     '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
+            #         .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
+
+            pbar.set_description(f"Epoch {epoch_idx}")
+            pbar.set_postfix(loss=f"{loss.item():.4f}", lr=f"{clr[0]:.6f}")
+
             # wandb: TRAIN curves vs global step (not epoch)
             step = global_step_base + batch_idx
             recoder.log_metrics({
@@ -70,6 +76,7 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
         del loss
     optimizer.scheduler.step()
     if is_main_process():
+        pbar.close()
         recoder.print_log('\tMean training loss: {:.10f}.'.format(np.mean(loss_value)))
         # optional: log per-epoch averaged train loss at the epoch index
         recoder.log_metrics({

@@ -54,7 +54,11 @@ class Recorder(object):
         if print_time:
             localtime = time.asctime(time.localtime(time.time()))
             str = "[ " + localtime + ' ] ' + str
-        print(str)
+        try:
+            from tqdm import tqdm
+            tqdm.write(str)
+        except Exception:
+            print(str)        
         if self.print_log_flag:
             with open(path, 'a') as f:
                 f.writelines(str)
