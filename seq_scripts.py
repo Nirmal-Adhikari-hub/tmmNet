@@ -23,6 +23,10 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
     loss_value = []
     clr = [group['lr'] for group in optimizer.optimizer.param_groups]
     scaler = GradScaler()
+
+    # use a monotonically increasing global step for WANDB train curves
+    global_step_base = epoch_idx * len(loader)
+
     for batch_idx, data in enumerate(tqdm(loader)):
         vid = device.data_to_device(data[0])
         vid_lgt = device.data_to_device(data[1])
@@ -53,11 +57,25 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
             recoder.print_log(
                 '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
                     .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
+            # wandb: TRAIN curves vs global step (not epoch)
+            step = global_step_base + batch_idx
+            recoder.log_metrics({
+                "step": step,          # your Recorder maps train/* to step_metric="step"
+                "epoch": epoch_idx,    # still useful for grouping
+                "train/ctc_loss": float(loss.item()),
+                "train/lr": float(clr[0]),
+            }, step=step)
+
         del ret_dict
         del loss
     optimizer.scheduler.step()
     if is_main_process():
         recoder.print_log('\tMean training loss: {:.10f}.'.format(np.mean(loss_value)))
+        # optional: log per-epoch averaged train loss at the epoch index
+        recoder.log_metrics({
+            "epoch": epoch_idx,
+            "train_epoch/ctc_loss_epoch": float(np.mean(loss_value)),
+        }, step=epoch_idx)
     return
 
 
@@ -93,6 +111,18 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
         f"{work_dir}/{mode}.txt")
     recoder.print_log('\tEpoch: {} {} done. LSTM wer: {:.4f}  ins:{:.4f}, del:{:.4f}'.format(
         epoch, mode, wer_results['wer'], wer_results['ins'], wer_results['del']), f"{work_dir}/{mode}.txt")
+    
+    # wandb: DEV/TEST curves vs epoch
+    if is_main_process():
+        metrics = {
+            "epoch": epoch,
+            f"{mode}/WER_LSTM": float(wer_results['wer']),
+            f"{mode}/WER_CONV": float(wer_results_con['wer']),
+            f"{mode}/WER": float(reg_per['wer']),                # best of the two, like your reg_per
+            f"{mode}/INS": float(reg_per['ins']),
+            f"{mode}/DEL": float(reg_per['del']),
+        }
+        recoder.log_metrics(metrics, step=epoch)
 
     return {"wer":reg_per['wer'], "ins":reg_per['ins'], 'del':reg_per['del']}
  

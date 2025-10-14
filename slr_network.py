@@ -34,7 +34,7 @@ class SLRModel(nn.Module):
     def __init__(
             self, num_classes, c2d_type, conv_type, use_bn=False,
             hidden_size=1024, gloss_dict=None, loss_weights=None,
-            weight_norm=True, share_classifier=True
+            weight_norm=True, share_classifier=True, use_graph=False
     ):
         super(SLRModel, self).__init__()
         self.decoder = None
@@ -42,7 +42,7 @@ class SLRModel(nn.Module):
         self.criterion_init()
         self.num_classes = num_classes
         self.loss_weights = loss_weights
-        self.conv2d = getattr(resnet, c2d_type)()
+        self.conv2d = getattr(resnet, c2d_type)(use_graph=use_graph)
         self.conv2d.fc = Identity()
 
         self.conv1d = TemporalConv(input_size=512,

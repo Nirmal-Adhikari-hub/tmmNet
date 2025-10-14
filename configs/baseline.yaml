@@ -46,8 +46,10 @@ model: slr_network.SLRModel
 decode_mode: beam
 model_args:
   num_classes: 1296
-  c2d_type: resnet18
+  # c2d_type: resnet18
+  c2d_type: resnet34
   conv_type: 2
   use_bn: 1 
   share_classifier: True
   weight_norm: True
+  use_graph: False # for using the graph CNN module

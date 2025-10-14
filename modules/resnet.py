@@ -67,9 +67,12 @@ class BasicBlock(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=1000):
+    def __init__(self, block, layers, num_classes=1000, use_graph=False):
         self.inplanes = 64
         super(ResNet, self).__init__()
+
+        self.use_graph = use_graph
+
         self.conv1 = nn.Conv3d(3, 64, kernel_size=(1, 7, 7), stride=(1, 2, 2), padding=(0, 3, 3),
                                bias=False)
         self.bn1 = nn.BatchNorm3d(64)
@@ -80,14 +83,21 @@ class ResNet(nn.Module):
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
-        self.localG = Grapher(in_channels=256, kernel_size=3, dilation=1, conv='edge', #mr
-                              act='relu', norm="batch", bias=True, stochastic=False,
-                              epsilon=0.0, r=1, n=14 * 14, drop_path=0.0, relative_pos=True)  # kernel_size=2
-        self.localG2 = Grapher(in_channels=512, kernel_size=4, dilation=1, conv='edge',
-                               act='relu', norm="batch", bias=True, stochastic=False,
-                               epsilon=0.0, r=1, n=7 * 7, drop_path=0.0, relative_pos=True)  # kernel_size=2
-        self.temporalG = TemporalGraph(k=14 * 14 // 4, in_channels=256, drop_path=0)
-        self.temporalG2 = TemporalGraph(k=7 * 7, in_channels=512, drop_path=0)
+
+        # graph modules: construct or bypass
+        if self.use_graph:
+            self.localG = Grapher(in_channels=256, kernel_size=3, dilation=1, conv='edge', #mr
+                                act='relu', norm="batch", bias=True, stochastic=False,
+                                epsilon=0.0, r=1, n=14 * 14, drop_path=0.0, relative_pos=True)  # kernel_size=2
+            self.localG2 = Grapher(in_channels=512, kernel_size=4, dilation=1, conv='edge',
+                                act='relu', norm="batch", bias=True, stochastic=False,
+                                epsilon=0.0, r=1, n=7 * 7, drop_path=0.0, relative_pos=True)  # kernel_size=2
+            self.temporalG = TemporalGraph(k=14 * 14 // 4, in_channels=256, drop_path=0)
+            self.temporalG2 = TemporalGraph(k=7 * 7, in_channels=512, drop_path=0)
+        else:
+            self.localG = self.localG2 = nn.Identity()
+            self.temporalG = self.temporalG2 = nn.Identity()
+
         self.alpha = nn.Parameter(torch.ones(4), requires_grad=True)
         self.fc = nn.Linear(512 * block.expansion, num_classes)
  
@@ -98,6 +108,7 @@ class ResNet(nn.Module):
             elif isinstance(m, nn.BatchNorm3d) or isinstance(m, nn.BatchNorm2d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
+
 
     def _make_layer(self, block, planes, blocks, stride=1):
         downsample = None
@@ -127,16 +138,16 @@ class ResNet(nn.Module):
         #
         N, C, T, H, W = x.size()
         x = rearrange(x, 'N C T H W -> (N T) C H W')  # [78, 256, 14, 14])
-        x = x + self.localG(x) * self.alpha[0]
-        x = x + self.temporalG(x, N) * self.alpha[1]
+        x = x + (self.localG(x) * self.alpha[0] if self.use_graph else 0)
+        x = x + (self.temporalG(x, N) * self.alpha[1] if self.use_graph else 0)
         x = x.view(N, T, C, H, W).permute(0, 2, 1, 3, 4)
         # #
         x = self.layer4(x)  # [1, 512, 100, 7, 7])
         # #
         N, C, T, H, W = x.size()
         x = rearrange(x, 'N C T H W -> (N T) C H W')  # [78, 256, 14, 14])
-        x = x + self.localG2(x) * self.alpha[2]
-        x = x + self.temporalG2(x, N) * self.alpha[3]
+        x = x + (self.localG2(x) * self.alpha[2] if self.use_graph else 0)
+        x = x + (self.temporalG2(x, N) * self.alpha[3] if self.use_graph else 0)
         x = x.view(N, T, C, H, W).permute(0, 2, 1, 3, 4)
         #
 
@@ -163,9 +174,15 @@ def resnet18(**kwargs):
 
 
 def resnet34(**kwargs):
-    """Constructs a ResNet-34 model.
-    """
     model = ResNet(BasicBlock, [3, 4, 6, 3], **kwargs)
+    # inflate 2D ImageNet weights to 3D (time kernel=1)
+    checkpoint = model_zoo.load_url(model_urls['resnet34'])
+    layer_names = list(checkpoint.keys())
+    for ln in layer_names:
+        if 'conv' in ln or 'downsample.0.weight' in ln:
+            checkpoint[ln] = checkpoint[ln].unsqueeze(2)  # (out,in,1,kh,kw)
+    model.load_state_dict(checkpoint, strict=False)
     return model
+
 
  

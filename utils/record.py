@@ -1,5 +1,5 @@
 import pdb
-import time
+import time, os
 
 
 class Recorder(object):
@@ -9,6 +9,39 @@ class Recorder(object):
         self.log_interval = log_interval
         self.log_path = '{}/log.txt'.format(work_dir)
         self.timer = dict(dataloader=0.001, device=0.001, forward=0.001, backward=0.001)
+
+        # --- NEW: optional wandb ---
+        self.wandb = None
+        try:
+            proj = os.getenv("WANDB_PROJECT", 'tmmNet')
+            if proj:
+                import wandb
+                run_name = os.getenv("WANDB_RUN_NAME", 'baseline_resnet101')
+                wandb_dir = work_dir.rstrip("/")
+                wandb.init(project=proj, name=run_name, dir=wandb_dir)
+                self.wandb = wandb
+                self.print_log(f"[wandb] initialized project={proj} name={run_name}", print_time=False)
+        except Exception as e:
+            self.wandb = None
+            self.print_log(f"[wandb] disabled ({e})", print_time=False)
+        # --- end wandb ---
+
+        if self.wandb is not None:
+            # make epochs the x-axis for eval metrics
+            self.wandb.define_metric("epoch")
+            self.wandb.define_metric("dev/*", step_metric="epoch")
+            self.wandb.define_metric("test/*", step_metric="epoch")
+            self.wandb.define_metric("train/*", step_metric="step")
+
+    def log_metrics(self, metrics: dict, step=None):
+        if self.wandb is not None:
+            try:
+                if step is not None:
+                    self.wandb.log(metrics, step=step)
+                else:
+                    self.wandb.log(metrics)
+            except Exception as _:
+                pass
 
     def print_time(self):
         localtime = time.asctime(time.localtime(time.time()))
