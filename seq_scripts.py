@@ -19,7 +19,7 @@ from utils.misc import *
 
 def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
     model.train()
-    optimizer.scheduler.step(epoch_idx)
+    # optimizer.scheduler.step(epoch_idx)
     loss_value = []
     clr = [group['lr'] for group in optimizer.optimizer.param_groups]
     scaler = GradScaler()

@@ -32,6 +32,7 @@ class Recorder(object):
             self.wandb.define_metric("dev/*", step_metric="epoch")
             self.wandb.define_metric("test/*", step_metric="epoch")
             self.wandb.define_metric("train/*", step_metric="step")
+            self.wandb.define_metric("train_epoch/*", step_metric="epoch")
 
     def log_metrics(self, metrics: dict, step=None):
         if self.wandb is not None:
