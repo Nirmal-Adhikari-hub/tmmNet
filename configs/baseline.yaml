@@ -8,7 +8,7 @@ work_dir: ./baseline/
 batch_size: 4
 random_seed: 0 
 test_batch_size: 4
-num_worker: 20
+num_worker: 4
 device: 0
 log_interval: 10000
 eval_interval: 1
