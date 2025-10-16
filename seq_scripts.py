@@ -27,7 +27,7 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
     # use a monotonically increasing global step for WANDB train curves
     global_step_base = epoch_idx * len(loader)
 
-    pbar = tqdm(loader, total=len(loader), dynamic_ncols=True, leave=False, disable=not is_main_process())
+    pbar = tqdm(loader, total=len(loader), dynamic_ncols=True, leave=True, disable=not is_main_process())
 
     for batch_idx, data in enumerate(pbar):
         vid = device.data_to_device(data[0])
@@ -66,7 +66,6 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
             # wandb: TRAIN curves vs global step (not epoch)
             step = global_step_base + batch_idx
             recoder.log_metrics({
-                "step": step,          # your Recorder maps train/* to step_metric="step"
                 "epoch": epoch_idx,    # still useful for grouping
                 "train/ctc_loss": float(loss.item()),
                 "train/lr": float(clr[0]),
@@ -81,8 +80,8 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
         # optional: log per-epoch averaged train loss at the epoch index
         recoder.log_metrics({
             "epoch": epoch_idx,
-            "train_epoch/ctc_loss_epoch": float(np.mean(loss_value)),
-        }, step=epoch_idx)
+            "train_epoch/ctc_loss": float(np.mean(loss_value)),
+        })
     return
 
 
@@ -129,7 +128,7 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
             f"{mode}/INS": float(reg_per['ins']),
             f"{mode}/DEL": float(reg_per['del']),
         }
-        recoder.log_metrics(metrics, step=epoch)
+        recoder.log_metrics(metrics)
 
     return {"wer":reg_per['wer'], "ins":reg_per['ins'], 'del':reg_per['del']}
  

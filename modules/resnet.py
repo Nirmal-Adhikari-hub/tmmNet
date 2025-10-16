@@ -131,13 +131,13 @@ class ResNet(nn.Module):
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
-        x = self.maxpool(x)  # torch.Size([1, 64, 100, 56, 56])
-        x = self.layer1(x)  # ([1, 64, 100, 56, 56])
-        x = self.layer2(x)  # ize([1, 128, 100, 28, 28])
-        x = self.layer3(x)  # e([1, 256, 100, 14, 14])
+        x = self.maxpool(x)  # (n,c,t,h,w) = (1, 64, 100, 56, 56)
+        x = self.layer1(x)  # (1, 64, 100, 56, 56)
+        x = self.layer2(x)  # (1, 128, 100, 28, 28)
+        x = self.layer3(x)  # (1, 256, 100, 14, 14)
         #
         N, C, T, H, W = x.size()
-        x = rearrange(x, 'N C T H W -> (N T) C H W')  # [78, 256, 14, 14])
+        x = rearrange(x, 'N C T H W -> (N T) C H W')  # [100x1, 256, 14, 14])
         x = x + (self.localG(x) * self.alpha[0] if self.use_graph else 0)
         x = x + (self.temporalG(x, N) * self.alpha[1] if self.use_graph else 0)
         x = x.view(N, T, C, H, W).permute(0, 2, 1, 3, 4)
@@ -145,17 +145,17 @@ class ResNet(nn.Module):
         x = self.layer4(x)  # [1, 512, 100, 7, 7])
         # #
         N, C, T, H, W = x.size()
-        x = rearrange(x, 'N C T H W -> (N T) C H W')  # [78, 256, 14, 14])
+        x = rearrange(x, 'N C T H W -> (N T) C H W')  # [100x1, 512, 7, 7])
         x = x + (self.localG2(x) * self.alpha[2] if self.use_graph else 0)
         x = x + (self.temporalG2(x, N) * self.alpha[3] if self.use_graph else 0)
         x = x.view(N, T, C, H, W).permute(0, 2, 1, 3, 4)
         #
 
-        x = x.transpose(1, 2).contiguous()  # debug5= torch.Size([1, 100, 512, 7, 7])
-        x = x.view((-1,) + x.size()[2:])  # bt,c,h,w  #ze([100, 512, 7, 7])
+        x = x.transpose(1, 2).contiguous()  # [1, 100, 512, 7, 7]
+        x = x.view((-1,) + x.size()[2:])  # bt,c,h,w  [100x1, 512, 7, 7]
         x = self.avgpool(x)
-        x = x.view(x.size(0), -1)  # bt,c
-        x = self.fc(x)  # bt,c
+        x = x.view(x.size(0), -1)  # bt,c (100x1,512)
+        x = self.fc(x)  # bt,c (100x1,1000)
 
         return x
 
@@ -186,3 +186,7 @@ def resnet34(**kwargs):
 
 
  
+if __name__ == "__main__":
+    model = resnet34(use_graph=False)
+    input = torch.randn(1, 3, 100, 224, 224)
+    outputs = model(input)

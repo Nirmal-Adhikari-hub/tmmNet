@@ -41,7 +41,7 @@ class Processor():
         self.device = utils.GpuDataParallel()
 
 
-        self.recoder = utils.Recorder(self.arg.work_dir, self.arg.print_log, self.arg.log_interval)
+        # self.recoder = utils.Recorder(self.arg.work_dir, self.arg.print_log, self.arg.log_interval)
         self.dataset = {}
         self.data_loader = {}
         self.gloss_dict = np.load(self.arg.dataset_info['dict_path'], allow_pickle=True).item()
