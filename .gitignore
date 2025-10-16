@@ -1,6 +1,7 @@
 *.pkl
 /weight
 */__pycache__/
+__pycache__/
 *.pyc
 *.pth
 *.log
