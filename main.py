@@ -140,7 +140,7 @@ class Processor():
         }, save_path)
 
     def loading(self):
-        # self.device.set_device(self.arg.device)
+        self.device.set_device(self.arg.device)
 
 
 
