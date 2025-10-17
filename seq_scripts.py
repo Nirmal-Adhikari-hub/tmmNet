@@ -55,6 +55,7 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
             torch.distributed.reduce(loss, dst=0)
 
         loss_value.append(loss.item())
+        step = global_step_base + batch_idx
         if batch_idx % recoder.log_interval == 0 and is_main_process():
             # recoder.print_log(
             #     '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
@@ -64,7 +65,7 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
             pbar.set_postfix(loss=f"{loss.item():.4f}", lr=f"{clr[0]:.6f}")
 
             # wandb: TRAIN curves vs global step (not epoch)
-            step = global_step_base + batch_idx
+            # step = global_step_base + batch_idx
             recoder.log_metrics({
                 "epoch": epoch_idx,    # still useful for grouping
                 "train/ctc_loss": float(loss.item()),

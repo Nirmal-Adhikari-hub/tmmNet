@@ -1,7 +1,7 @@
 # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner
 # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner_original
 # deblur_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner
-dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner
+dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner
 # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner # RVRT delburred dataset
 # dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
 # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner 
