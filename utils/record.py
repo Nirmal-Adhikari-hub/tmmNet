@@ -16,7 +16,7 @@ class Recorder(object):
             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
             if proj:
                 import wandb
-                run_name = os.getenv("WANDB_RUN_NAME", 'deblurred_baseline_resnet34')
+                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_baseline')
                 wandb_dir = work_dir.rstrip("/")
                 wandb.init(project=proj, name=run_name, dir=wandb_dir)
                 self.wandb = wandb

@@ -188,6 +188,5 @@ def resnet34(**kwargs):
  
 if __name__ == "__main__":
     model = resnet34(use_graph=False)
-    input = torch.randn(2, 3, 100, 224, 224)
+    input = torch.randn(1, 3, 100, 224, 224)
     outputs = model(input)
-    print(outputs.shape)

@@ -1,1 +1,1 @@
-python main.py --load-checkpoints /shared/home/xvoice/nirmal/tmmNet/deblurred_baseline/_best_model.pt 2>&1 | tee -a deblurred_baseline_log.txt
+python main.py 2>&1 | tee -a resent18_baseline_log.txt
