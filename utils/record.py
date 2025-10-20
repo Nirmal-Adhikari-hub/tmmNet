@@ -16,7 +16,7 @@ class Recorder(object):
             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
             if proj:
                 import wandb
-                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_baseline')
+                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_tmm_v1')
                 wandb_dir = work_dir.rstrip("/")
                 wandb.init(project=proj, name=run_name, dir=wandb_dir)
                 self.wandb = wandb
@@ -27,12 +27,13 @@ class Recorder(object):
         # --- end wandb ---
 
         if self.wandb is not None:
+            pass
             # make epochs the x-axis for eval metrics
-            self.wandb.define_metric("epoch")
-            self.wandb.define_metric("dev/*", step_metric="epoch")
-            self.wandb.define_metric("test/*", step_metric="epoch")
-            self.wandb.define_metric("train/*", step_metric="step")
-            self.wandb.define_metric("train_epoch/*", step_metric="epoch")
+            # self.wandb.define_metric("epoch")
+            # self.wandb.define_metric("dev/*", step_metric="epoch")
+            # self.wandb.define_metric("test/*", step_metric="epoch")
+            # self.wandb.define_metric("train/*", step_metric="step")
+            # self.wandb.define_metric("train_epoch/*", step_metric="epoch")
 
     def log_metrics(self, metrics: dict, step=None):
         if self.wandb is not None:

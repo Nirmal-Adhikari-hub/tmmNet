@@ -31,6 +31,11 @@ class Processor():
         shutil.copy2('./modules/tconv.py', self.arg.work_dir)
         shutil.copy2('./modules/resnet.py', self.arg.work_dir)
         shutil.copy2('./modules/gcn_lib/temgraph.py', self.arg.work_dir)
+        if getattr(self.arg, "ablation_cfg", None):
+            try:
+                shutil.copy2(self.arg.ablation_cfg, self.arg.work_dir)
+            except Exception:
+                pass
         torch.backends.cudnn.benchmark = True
         if type(self.arg.device) is not int:
             init_distributed_mode(self.arg)
@@ -281,24 +286,64 @@ def import_class(name):
 
 
 if __name__ == '__main__':
-    sparser = utils.get_parser()
-    p = sparser.parse_args()
-    if p.config is not None:
-        with open(p.config, 'r') as f:
-            try:
-                default_arg = yaml.load(f, Loader=yaml.FullLoader)
-            except AttributeError:
-                default_arg = yaml.load(f)
-        key = vars(p).keys()
-        for k in default_arg.keys():
-            if k not in key:
-                print('WRONG ARG: {}'.format(k))
-                assert (k in key)
-        sparser.set_defaults(**default_arg)
-    args = sparser.parse_args()
+    # sparser = utils.get_parser()
+    # p = sparser.parse_args()
+    # if p.config is not None:
+    #     with open(p.config, 'r') as f:
+    #         try:
+    #             default_arg = yaml.load(f, Loader=yaml.FullLoader)
+    #         except AttributeError:
+    #             default_arg = yaml.load(f)
+    #     key = vars(p).keys()
+    #     for k in default_arg.keys():
+    #         if k not in key:
+    #             print('WRONG ARG: {}'.format(k))
+    #             assert (k in key)
+    #     sparser.set_defaults(**default_arg)
+    # args = sparser.parse_args()
+    # with open(f"./configs/{args.dataset}.yaml", 'r') as f:
+    #     args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
+    # processor = Processor(args)
+    # utils.pack_code("./", args.work_dir)
+    # processor.start()
+ 
+    from argparse import Namespace
+    from utils.parameters import load_yaml, merge_cfgs, get_parser
+
+    # 1) Build parser (must include --config and --ablation_cfg)
+    parser = get_parser()
+    # First parse: just to read which files to load
+    cmd = parser.parse_args()
+
+    # 2) Seed defaults with baseline.yaml if provided
+    if cmd.config is not None:
+        base_cfg = load_yaml(cmd.config)  # dict from baseline.yaml
+        parser.set_defaults(**base_cfg)
+    else:
+        base_cfg = {}
+
+    # 3) Merge ablation.yaml on top (if provided), then set as defaults
+    #    This ensures ablation overrides baseline, but CLI still wins.
+    if getattr(cmd, "ablation_cfg", None):
+        merged = merge_cfgs(base_cfg, cmd.ablation_cfg)  # dict
+        parser.set_defaults(**merged)
+
+    # 4) Re-parse with new defaults so CLI flags remain highest precedence
+    args = parser.parse_args()
+
+    # 5) Load dataset_info (unchanged)
     with open(f"./configs/{args.dataset}.yaml", 'r') as f:
         args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
+
+    # 6) Start processor
     processor = Processor(args)
+
+    # 7) Optional: archive configs for reproducibility
     utils.pack_code("./", args.work_dir)
+    # copy the *actual* config files used
+    if cmd.config:
+        shutil.copy2(cmd.config, os.path.join(args.work_dir, os.path.basename(cmd.config)))
+    if getattr(cmd, "ablation_cfg", None):
+        shutil.copy2(cmd.ablation_cfg, os.path.join(args.work_dir, os.path.basename(cmd.ablation_cfg)))
+
     processor.start()
- 

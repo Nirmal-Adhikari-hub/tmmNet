@@ -1,4 +1,32 @@
-import argparse
+import argparse, yaml
+from copy import deepcopy
+
+
+import argparse, yaml
+from copy import deepcopy
+
+def load_yaml(path: str):
+    with open(path, "r") as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
+
+def _deep_update(dst: dict, src: dict):
+    # recursively update dst with src
+    for k, v in src.items():
+        if isinstance(v, dict) and isinstance(dst.get(k), dict):
+            _deep_update(dst[k], v)
+        else:
+            dst[k] = v
+
+def merge_dicts(base: dict, over: dict) -> dict:
+    out = deepcopy(base)
+    _deep_update(out, over)
+    return out
+
+def merge_cfgs(baseline_cfg: dict, ablation_cfg_path: str | None) -> dict:
+    if not ablation_cfg_path:
+        return deepcopy(baseline_cfg)
+    ablation_cfg = load_yaml(ablation_cfg_path)
+    return merge_dicts(baseline_cfg, ablation_cfg)
 
 
 def get_parser():
@@ -154,9 +182,9 @@ def get_parser():
     parser.add_argument('--local_rank', default=0, type=int)
     parser.add_argument('--dist-url', default='env://',
                         help='url used to set up distributed training')
-
-
-
+    
+    parser.add_argument('--ablation_cfg', type=str, default=None,
+                        help='Optional YAML to override baseline config for ablation study.')
 
     return parser
 

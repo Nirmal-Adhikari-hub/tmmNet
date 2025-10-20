@@ -1,0 +1,23 @@
+# configs/ablation_tmm.yaml
+# Only keys you want to override from baseline.yaml
+
+model_args:
+  # TMM toggles
+  enable_tmm: true
+  tmm_location: "post_bilstm"   # or "pre_bilstm"
+  tmm_alpha: 0.2
+  enable_motion: true
+
+loss_weights:
+  SeqCTC: 1.0
+  ConvCTC: 1.0
+  Dist: 25.0        # KD conv->seq stays as in baseline
+
+# Optional: try greedy if you expose decode_mode in code
+# decode_mode: "beam"  # or "max"
+
+# Typical ablation grid you can try:
+# - enable_tmm: [false, true]
+# - tmm_location: ["pre_bilstm", "post_bilstm"]
+# - enable_motion: [false, true]
+# - Dist: [0.0, 25.0]

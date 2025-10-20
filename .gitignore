@@ -7,3 +7,4 @@ __pycache__/
 *.log
 *.csv
 *.out
+resnet18_tmm_v1_log/

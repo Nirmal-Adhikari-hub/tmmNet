@@ -1,1 +1,1 @@
-python main.py 2>&1 | tee -a resent18_baseline_log.txt
+python main.py --ablation_cfg configs/ablation_tmm.yaml 2>&1 | tee -a resnet18_tmm_v1_log.txt
