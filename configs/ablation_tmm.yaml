@@ -4,8 +4,8 @@
 model_args:
   # TMM toggles
   enable_tmm: true
-  tmm_location: "post_bilstm"   # or "pre_bilstm"
-  tmm_alpha: 0.2
+  tmm_location: "pre_bilstm"   # or "pre_bilstm"
+  tmm_alpha: 1
   enable_motion: true
 
 loss_weights:
@@ -21,3 +21,9 @@ loss_weights:
 # - tmm_location: ["pre_bilstm", "post_bilstm"]
 # - enable_motion: [false, true]
 # - Dist: [0.0, 25.0]
+
+
+# To checkpoint models based on this metric score. 
+# Original code selected the best WER among the 
+# current epoch's Conv or LSTM WER. "best" is original/default
+select_metric: "lstm" # "conv", "lstm", "best" 

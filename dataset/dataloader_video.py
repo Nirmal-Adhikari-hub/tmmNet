@@ -1,5 +1,5 @@
 import os
-import cv2
+import cv2; cv2.setNumThreads(0)
 import sys
 import pdb
 import six

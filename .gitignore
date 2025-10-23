@@ -8,3 +8,5 @@ __pycache__/
 *.csv
 *.out
 resnet18_tmm_v1_log/
+output/
+ZtmmNet.egg-info/

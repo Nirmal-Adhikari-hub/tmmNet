@@ -16,7 +16,6 @@ import modules.resnet as resnet
 from modules.tmm import MotionDiffEncoder, TemporalMotionMix
 ####################################
 
-
 class Identity(nn.Module):
     def __init__(self):
         super(Identity, self).__init__()
@@ -128,13 +127,14 @@ class SLRModel(nn.Module):
         if len(x.shape) == 5:
             # videos
             batch, temp, channel, height, width = x.shape
-            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct # (B, 512, T) -> (B, 512, T)
+            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct # (B, T, 512) -> (B, 512, T)
             ############################################
             # prepare motion if needed
             if self.enable_tmm and self.enable_motion:
                 # MotionDiffEncoder expects (B, T, C, H, W)
-                with torch.no_grad(): # motion is a cue; you can also learn end-to-end by removing no_grad
-                    m_raw = self.motion_encoder(x) # (B, T, hidden_size)
+                # with torch.no_grad(): # motion is a cue; you can also learn end-to-end by removing no_grad
+                #     m_raw = self.motion_encoder(x) # (B, T, d)
+                m_raw = self.motion_encoder(x) # (B, T, d)
             else:
                 m_raw = None
             ############################################
@@ -145,12 +145,12 @@ class SLRModel(nn.Module):
 
 
         # TemporalConv
-        conv1d_outputs = self.conv1d(framewise, len_x)
+        conv1d_outputs = self.conv1d(framewise, len_x) # visual_feat: (T', B, d), conv_logits: (T', B, num_class), feat_len: (B,)
 
         ############################################
-        # x: T, B, C
+        # x: T', B, d
         # x = conv1d_outputs['visual_feat']
-        z_tcn = conv1d_outputs['visual_feat'] # (T', B, H)
+        z_tcn = conv1d_outputs['visual_feat'] # (T', B, d)
         ############################################
 
         
@@ -160,11 +160,11 @@ class SLRModel(nn.Module):
         # ------- TMM location: pre_bilstm -------
         if self.enable_tmm and self.tmm_location == "pre_bilstm":
             if m_raw is not None:
-                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp) # (T', B, d)
             else:
                 # fallback: zero motion
                 m_aligned = torch.zeros_like(z_tcn)
-            z_clean, g = self.tmm(z_tcn, m_aligned) # (T', B, H) , (T', B, 1)
+            z_clean, g, g_pre_sigmoid = self.tmm(z_tcn, m_aligned) # (T', B, d) , (T', B, 1)
             z_for_lstm = z_clean
         else:
             z_for_lstm = z_tcn
@@ -211,7 +211,8 @@ class SLRModel(nn.Module):
             "conv_sents": conv_pred,
             "recognized_sents": pred,
             # OPTIONAL: expose gate for diagnostics
-            "tmm_gate": g if (self.enable_tmm) else None,            
+            "tmm_gate": g if (self.enable_tmm) else None,
+            "tmm_gate_pre": g_pre_sigmoid,           
         }
 
     def criterion_calculation(self, ret_dict, label, label_lgt):

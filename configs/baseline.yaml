@@ -8,7 +8,7 @@ work_dir: ./resnet18_tmm_v1_log/
 batch_size: 4
 random_seed: 0 
 test_batch_size: 4
-num_worker: 4
+num_worker: 8
 device: 0
 log_interval: 10000
 eval_interval: 1
@@ -47,7 +47,7 @@ decode_mode: beam
 model_args:
   num_classes: 1296
   # c2d_type: resnet18
-  c2d_type: resnet18
+  c2d_type: resnet34 # resent18
   conv_type: 2
   use_bn: 1 
   share_classifier: True

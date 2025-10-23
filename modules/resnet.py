@@ -65,6 +65,57 @@ class BasicBlock(nn.Module):
         return out
 
 
+import torch
+import torch.nn as nn
+
+
+class Bottleneck(nn.Module):
+    expansion = 4  # Output channels are 4× the input channels
+
+    def __init__(self, inplanes, planes, stride=1, downsample=None, norm_layer=None):
+        super(Bottleneck, self).__init__()
+        if norm_layer is None:
+            norm_layer = nn.BatchNorm3d if hasattr(nn, "BatchNorm3d") else nn.BatchNorm2d
+
+        width = planes
+        self.conv1 = nn.Conv3d(inplanes, width, kernel_size=1, bias=False)
+        self.bn1 = norm_layer(width)
+
+        self.conv2 = nn.Conv3d(
+            width, width, kernel_size=3, stride=stride, padding=1, bias=False
+        )
+        self.bn2 = norm_layer(width)
+
+        self.conv3 = nn.Conv3d(width, planes * self.expansion, kernel_size=1, bias=False)
+        self.bn3 = norm_layer(planes * self.expansion)
+
+        self.relu = nn.ReLU(inplace=True)
+        self.downsample = downsample
+        self.stride = stride
+
+    def forward(self, x):
+        identity = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.conv2(out)
+        out = self.bn2(out)
+        out = self.relu(out)
+
+        out = self.conv3(out)
+        out = self.bn3(out)
+
+        if self.downsample is not None:
+            identity = self.downsample(x)
+
+        out += identity
+        out = self.relu(out)
+
+        return out
+
+
 class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1000, use_graph=False):
@@ -184,7 +235,33 @@ def resnet34(**kwargs):
     model.load_state_dict(checkpoint, strict=False)
     return model
 
+def inflate_weight_2d_to_3d(weight_2d, time_dim=3):
+    """Replicate 2D weights along temporal dimension and normalize."""
+    # weight_2d: (out, in, h, w)
+    weight_3d = weight_2d.unsqueeze(2).repeat(1, 1, time_dim, 1, 1)
+    weight_3d /= time_dim  # normalize so total energy stays similar
+    return weight_3d
 
+
+def resnet101(**kwargs):
+    """
+    Build a ResNet-101 (3D version) inflated from 2D ImageNet weights.
+    Temporal kernel = 3 for all convs.
+    """
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
+    checkpoint = model_zoo.load_url(model_urls['resnet101'])
+    inflated_checkpoint = {}
+
+    for k, v in checkpoint.items():
+        if 'conv' in k or 'downsample.0.weight' in k:
+            # Inflate all 2D convs to 3D with temporal kernel size 3
+            inflated_checkpoint[k] = inflate_weight_2d_to_3d(v, time_dim=3)
+        else:
+            inflated_checkpoint[k] = v
+
+    msg = model.load_state_dict(inflated_checkpoint, strict=False)
+    print(f"Loaded inflated resnet101 weights with message: {msg}")
+    return model
  
 if __name__ == "__main__":
     model = resnet34(use_graph=False)

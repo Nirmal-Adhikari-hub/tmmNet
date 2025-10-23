@@ -21,6 +21,32 @@ import utils
 from seq_scripts import seq_train, seq_eval
 from torch.cuda.amp import autocast as autocast
 from utils.misc import *
+
+def _unwrap(model: nn.Module) -> nn.Module:
+    from torch.nn.parallel import DistributedDataParallel as DDP
+    if isinstance(model, (nn.DataParallel, DDP)):
+        return model.module
+    return model
+
+def compute_gflops_with_fvcore(model: nn.Module, vid, vid_lgt):
+    """
+    Returns (gflops_total_batch, gflops_per_sample) or (None, None) if fvcore not available.
+    """
+    try:
+        from fvcore.nn import FlopCountAnalysis
+    except Exception as e:
+        return None, None
+
+    m = _unwrap(model).eval()
+    with torch.inference_mode():
+        # FLOPs for a *single forward* with current shapes
+        flops_total = FlopCountAnalysis(m, (vid, vid_lgt)).total()
+    gflops_total = flops_total / 1e9
+    gflops_per_sample = gflops_total / max(1, int(vid.shape[0]))
+    return gflops_total, gflops_per_sample
+
+
+
 class Processor():
     def __init__(self, arg):
         self.arg = arg
@@ -53,7 +79,13 @@ class Processor():
         self.arg.model_args['num_classes'] = len(self.gloss_dict) + 1
         self.model, self.optimizer = self.loading()
 
-
+        # print(f"==================== PRINTING MODEL PROPERTIES ====================")
+        print(f"{self.model}\n ==============================================================")
+        total, trainable = self.count_params()
+        print(f"Total parameters (total, trainable): {total}, {trainable}")
+        # NEW: profile FLOPs once
+        self.profile_gflops_once()
+        # print(f"==================== PRINTING MODEL ====================")
 
 
     def start(self):
@@ -88,15 +120,18 @@ class Processor():
                         best_dev = dev_wer
                         best_tes = test_wer
                         best_epoch = epoch
-                        model_path = "{}_best_model.pt".format(self.arg.work_dir)
+                        model_path = os.path.join(self.arg.work_dir, "_best_model.pt")
                         self.save_model(epoch, model_path)
                         self.recoder.print_log('Save best model')
+
                     self.recoder.print_log('Best_dev: {:05.2f}, {:05.2f}, {:05.2f}, '
                                            'Best_test: {:05.2f}, {:05.2f}, {:05.2f},'
                                            'Epoch : {}'.format(best_dev["wer"], best_dev["del"], best_dev["ins"],
                                                                best_tes["wer"],best_tes["del"],best_tes["ins"], best_epoch))
                     if save_model:
-                        model_path = "{}dev_{:05.2f}_epoch{}_model.pt".format(self.arg.work_dir, dev_wer['wer'], epoch)
+                        # model_path = "{}dev_{:05.2f}_epoch{}_model.pt".format(self.arg.work_dir, dev_wer['wer'], epoch)
+                        fname = f"dev_{dev_wer['wer']:.2f}_epoch{epoch}_model.pt"
+                        model_path = os.path.join(self.arg.work_dir, fname)
                         seq_model_list.append(model_path)
                         print("seq_model_list", seq_model_list)
                         self.save_model(epoch, model_path)
@@ -123,6 +158,35 @@ class Processor():
                     self.data_loader[mode + "_eval" if mode == "train" else mode],
                     self.model, self.device, mode, self.arg.work_dir, self.recoder
                 )
+    def count_params(self):
+        total = sum(p.numel() for p in self.model.parameters())
+        trainable = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
+        return total, trainable
+    
+    def profile_gflops_once(self):
+        """
+        Uses one dev batch to estimate GFLOPs.
+        Works for all ablations because it forwards (vid, vid_lgt).
+        """
+        try:
+            loader = self.data_loader.get("dev", None) or self.data_loader.get("train_eval", None)
+            if loader is None:
+                self.recoder.print_log("[FLOPs] No loader available; skipping.")
+                return
+            data = next(iter(loader))
+            vid = self.device.data_to_device(data[0])
+            vid_lgt = self.device.data_to_device(data[1])
+            gtot, gper = compute_gflops_with_fvcore(self.model, vid, vid_lgt)
+            if gtot is None:
+                self.recoder.print_log("[FLOPs] fvcore not installed. Run: pip install fvcore")
+                return
+            self.recoder.print_log(f"FLOPs: {gtot:.2f} GFLOPs per batch (~{gper:.2f} per sample).")
+        except StopIteration:
+            self.recoder.print_log("[FLOPs] Empty loader; skipping.")
+        except Exception as e:
+            self.recoder.print_log(f"[FLOPs] Skipped due to: {repr(e)}")
+
+
 
     def save_arg(self):
         arg_dict = vars(self.arg)
@@ -132,22 +196,33 @@ class Processor():
             yaml.dump(arg_dict, f)
 
     def save_model(self, epoch, save_path):
-        if len(self.device.gpu_list)>1:
+        if len(self.device.gpu_list) > 1:
             model = self.model.module
         else:
-            model= self.model
-        torch.save({
+            model = self.model
+
+        payload = {
             'epoch': epoch,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
             'scheduler_state_dict': self.optimizer.scheduler.state_dict(),
-            'rng_state': self.rng.save_rng_state(),
-        }, save_path)
+        }
+        if hasattr(self, "rng"):             # only if random_fix was enabled
+            payload['rng_state'] = self.rng.save_rng_state()
+
+        torch.save(payload, save_path)
+
 
     def loading(self):
         self.device.set_device(self.arg.device)
 
-
+        # inside Processor.loading(), right after self.device.set_device(self.arg.device)
+        visible = os.environ.get("CUDA_VISIBLE_DEVICES")
+        logical = self.device.output_device  # e.g., 0 after remap
+        print("CUDA_VISIBLE_DEVICES:", visible)
+        print("torch.cuda.device_count():", torch.cuda.device_count())
+        print("Using logical cuda:", logical)
+        print("GPU selected name:", torch.cuda.get_device_name(logical))
 
         print("Loading model")
         model_class = import_class(self.arg.model)
@@ -224,7 +299,7 @@ class Processor():
             optimizer.scheduler.load_state_dict(state_dict["scheduler_state_dict"])
 
         self.arg.optimizer_args['start_epoch'] = state_dict["epoch"] + 1
-        self.recoder.print_log("Resuming from checkpoint: epoch {self.arg.optimizer_args['start_epoch']}")
+        self.recoder.print_log(f"Resuming from checkpoint: epoch {self.arg.optimizer_args['start_epoch']}")
 
     def load_data(self):
         print("Loading Dataprocessing")
@@ -248,34 +323,88 @@ class Processor():
         np.random.seed(int(self.arg.random_seed)+worker_id)
 
 
+    # def build_dataloader(self, dataset, mode, train_flag):
+    #     if len(self.device.gpu_list) > 1:
+    #         if train_flag:
+    #             sampler = torch.utils.data.distributed.DistributedSampler(dataset, shuffle=train_flag)
+    #         else:
+    #             sampler = torch.utils.data.SequentialSampler(dataset)
+    #         batch_size = self.arg.batch_size if mode == "train" else self.arg.test_batch_size
+    #         loader = torch.utils.data.DataLoader(
+    #             dataset,
+    #             sampler=sampler,
+    #             batch_size=batch_size,
+    #             collate_fn=self.feeder.collate_fn,
+    #             num_workers=self.arg.num_worker,
+    #             pin_memory=True,
+    #             worker_init_fn=self.init_fn,
+    #         )
+    #         return loader
+    #     else:
+    #         return torch.utils.data.DataLoader(
+    #             dataset,
+    #             batch_size= self.arg.batch_size if mode == "train" else self.arg.test_batch_size,
+    #             shuffle=train_flag,
+    #             drop_last=train_flag,
+    #             num_workers=self.arg.num_worker if train_flag else 0,  # if train_flag else 0
+    #             collate_fn=self.feeder.collate_fn,
+    #             pin_memory=True,
+    #             prefetch_factor= 4 if train_flag else 2,
+    #             persistent_workers= train_flag if self.arg.num_worker > 0 else False,
+    #             worker_init_fn=self.init_fn if self.arg.num_worker > 0 else None,
+    #         )
+
     def build_dataloader(self, dataset, mode, train_flag):
+        batch_size = self.arg.batch_size if mode == "train" else self.arg.test_batch_size
+
         if len(self.device.gpu_list) > 1:
+            # DDP branch
             if train_flag:
-                sampler = torch.utils.data.distributed.DistributedSampler(dataset, shuffle=train_flag)
+                sampler = torch.utils.data.distributed.DistributedSampler(dataset, shuffle=True)
             else:
                 sampler = torch.utils.data.SequentialSampler(dataset)
-            batch_size = self.arg.batch_size if mode == "train" else self.arg.test_batch_size
-            loader = torch.utils.data.DataLoader(
-                dataset,
+
+            nw = int(self.arg.num_worker) if train_flag else 0
+            kwargs = dict(
+                dataset=dataset,
                 sampler=sampler,
                 batch_size=batch_size,
                 collate_fn=self.feeder.collate_fn,
-                num_workers=self.arg.num_worker,
+                num_workers=nw,
                 pin_memory=True,
-                worker_init_fn=self.init_fn,
             )
-            return loader
+            if nw > 0:
+                kwargs.update(
+                    dict(
+                        prefetch_factor=4 if train_flag else 2,
+                        persistent_workers=True,
+                        worker_init_fn=self.init_fn,
+                    )
+                )
+            return torch.utils.data.DataLoader(**kwargs)
+
         else:
-            return torch.utils.data.DataLoader(
-                dataset,
-                batch_size= self.arg.batch_size if mode == "train" else self.arg.test_batch_size,
+            # single-GPU branch
+            nw = int(self.arg.num_worker) if train_flag else 0
+            kwargs = dict(
+                dataset=dataset,
+                batch_size=batch_size,
                 shuffle=train_flag,
                 drop_last=train_flag,
-                num_workers=self.arg.num_worker,  # if train_flag else 0
-                collate_fn=self.feeder.collate_fn,
+                num_workers=nw,
                 pin_memory=True,
-                worker_init_fn=self.init_fn,
+                collate_fn=self.feeder.collate_fn,
             )
+            if nw > 0:
+                kwargs.update(
+                    dict(
+                        prefetch_factor=4 if train_flag else 2,
+                        persistent_workers=True,
+                        worker_init_fn=self.init_fn,
+                    )
+                )
+            return torch.utils.data.DataLoader(**kwargs)
+
 
 
 def import_class(name):
@@ -339,7 +468,14 @@ if __name__ == '__main__':
     processor = Processor(args)
 
     # 7) Optional: archive configs for reproducibility
-    utils.pack_code("./", args.work_dir)
+    # utils.pack_code("./", args.work_dir)
+    import io, contextlib
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
+        utils.pack_code("./", args.work_dir)
+    with open(os.path.join(args.work_dir, "code_snapshot.log"), "w") as f:
+        f.write(buf.getvalue())
+
     # copy the *actual* config files used
     if cmd.config:
         shutil.copy2(cmd.config, os.path.join(args.work_dir, os.path.basename(cmd.config)))

@@ -101,12 +101,13 @@ class TemporalConv(nn.Module):
         return feat_len
 
     def forward(self, frame_feat, lgt):
+        # frame_feat: (B, d, T)
         visual_feat = self.temporal_conv(frame_feat)
         lgt = self.update_lgt(lgt)
         logits = None if self.num_classes == -1 \
             else self.fc(visual_feat.transpose(1, 2)).transpose(1, 2)
         return {
-            "visual_feat": visual_feat.permute(2, 0, 1),
-            "conv_logits": logits.permute(2, 0, 1),
-            "feat_len": lgt,
+            "visual_feat": visual_feat.permute(2, 0, 1), # (T', B, d)
+            "conv_logits": logits.permute(2, 0, 1), # (T', B, num_classes)
+            "feat_len": lgt, # (B, )
         }

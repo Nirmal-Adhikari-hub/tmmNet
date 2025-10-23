@@ -1,2282 +1,0 @@
-wandb: Currently logged in as: adhikareen (adhikareen-inha-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.21.1
-wandb: Run data is saved locally in ./resnet18_tmm_v1_log/wandb/run-20251020_230850-3d5tulh9
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run resnet18_tmm_v1
-wandb: ⭐️ View project at https://wandb.ai/adhikareen-inha-university/tmmNet
-wandb: 🚀 View run at https://wandb.ai/adhikareen-inha-university/tmmNet/runs/3d5tulh9
-[wandb] initialized project=tmmNet name=resnet18_tmm_v1
-[0]
-Traceback (most recent call last):
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 306, in _lazy_init
-    queued_call()
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 174, in _check_capability
-    capability = get_device_capability(d)
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 430, in get_device_capability
-    prop = get_device_properties(device)
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 448, in get_device_properties
-    return _get_device_properties(device)  # type: ignore[name-defined]
-RuntimeError: device >= 0 && device < num_gpus INTERNAL ASSERT FAILED at "../aten/src/ATen/cuda/CUDAContext.cpp":50, please report a bug to PyTorch. device=, num_gpus=
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 339, in <module>
-    processor = Processor(args)
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 54, in __init__
-    self.model, self.optimizer = self.loading()
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 148, in loading
-    self.device.set_device(self.arg.device)
-  File "/home/nirmal/SlowFast/ZtmmNet/utils/device.py", line 20, in set_device
-    self.occupy_gpu(self.gpu_list)
-  File "/home/nirmal/SlowFast/ZtmmNet/utils/device.py", line 59, in occupy_gpu
-    torch.zeros(1).cuda(g)
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 312, in _lazy_init
-    raise DeferredCudaCallError(msg) from e
-torch.cuda.DeferredCudaCallError: CUDA call failed lazily at initialization with error: device >= 0 && device < num_gpus INTERNAL ASSERT FAILED at "../aten/src/ATen/cuda/CUDAContext.cpp":50, please report a bug to PyTorch. device=, num_gpus=
-
-CUDA call was originally invoked at:
-
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 8, in <module>
-    import torch
-  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
-  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/__init__.py", line 1480, in <module>
-    _C._initExtension(manager_path())
-  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
-  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 238, in <module>
-    _lazy_call(_check_capability)
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/cuda/__init__.py", line 235, in _lazy_call
-    _queued_calls.append((callable, traceback.format_stack()))
-
-[1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mresnet18_tmm_v1[0m at: [34mhttps://wandb.ai/adhikareen-inha-university/tmmNet/runs/3d5tulh9[0m
-wandb: Currently logged in as: adhikareen (adhikareen-inha-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.21.1
-wandb: Run data is saved locally in ./resnet18_tmm_v1_log/wandb/run-20251020_231139-uem8ji8g
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run resnet18_tmm_v1
-wandb: ⭐️ View project at https://wandb.ai/adhikareen-inha-university/tmmNet
-wandb: 🚀 View run at https://wandb.ai/adhikareen-inha-university/tmmNet/runs/uem8ji8g
-/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
-  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
-Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /home/nirmal/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth
-[wandb] initialized project=tmmNet name=resnet18_tmm_v1
-[0]
-Loading model
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False
-  0%|          | 0.00/44.7M [00:00<?, ?B/s]  9%|▊         | 3.88M/44.7M [00:00<00:01, 36.5MB/s] 17%|█▋        | 7.38M/44.7M [00:00<00:04, 9.74MB/s] 21%|██        | 9.25M/44.7M [00:01<00:04, 8.30MB/s] 24%|██▎       | 10.5M/44.7M [00:01<00:04, 7.69MB/s] 26%|██▌       | 11.5M/44.7M [00:01<00:04, 7.18MB/s] 28%|██▊       | 12.4M/44.7M [00:01<00:04, 6.91MB/s] 29%|██▉       | 13.1M/44.7M [00:01<00:04, 6.73MB/s] 31%|███       | 13.9M/44.7M [00:01<00:04, 6.63MB/s] 33%|███▎      | 14.6M/44.7M [00:01<00:04, 6.54MB/s] 34%|███▍      | 15.4M/44.7M [00:02<00:04, 6.20MB/s] 36%|███▌      | 16.0M/44.7M [00:02<00:04, 6.23MB/s] 37%|███▋      | 16.6M/44.7M [00:02<00:04, 6.10MB/s] 39%|███▊      | 17.2M/44.7M [00:02<00:04, 6.02MB/s] 40%|████      | 17.9M/44.7M [00:02<00:04, 5.90MB/s] 41%|████▏     | 18.5M/44.7M [00:02<00:04, 5.93MB/s] 43%|████▎     | 19.1M/44.7M [00:02<00:04, 6.00MB/s] 44%|████▍     | 19.8M/44.7M [00:02<00:04, 6.00MB/s] 46%|████▌     | 20.4M/44.7M [00:02<00:04, 5.89MB/s] 47%|████▋     | 21.0M/44.7M [00:03<00:04, 5.76MB/s] 48%|████▊     | 21.6M/44.7M [00:03<00:04, 5.97MB/s] 50%|████▉     | 22.2M/44.7M [00:03<00:04, 5.81MB/s] 51%|█████     | 22.9M/44.7M [00:03<00:03, 5.98MB/s] 53%|█████▎    | 23.5M/44.7M [00:03<00:03, 5.96MB/s] 54%|█████▍    | 24.1M/44.7M [00:03<00:03, 5.72MB/s] 55%|█████▌    | 24.8M/44.7M [00:03<00:03, 5.78MB/s] 57%|█████▋    | 25.4M/44.7M [00:03<00:03, 5.82MB/s] 58%|█████▊    | 26.0M/44.7M [00:03<00:03, 5.89MB/s] 60%|█████▉    | 26.6M/44.7M [00:04<00:03, 6.08MB/s] 61%|██████    | 27.2M/44.7M [00:04<00:03, 5.92MB/s] 62%|██████▏   | 27.9M/44.7M [00:04<00:02, 6.08MB/s] 64%|██████▍   | 28.5M/44.7M [00:04<00:02, 5.96MB/s] 65%|██████▌   | 29.1M/44.7M [00:04<00:02, 6.04MB/s] 67%|██████▋   | 29.8M/44.7M [00:04<00:02, 6.12MB/s] 68%|██████▊   | 30.4M/44.7M [00:04<00:02, 5.97MB/s] 69%|██████▉   | 31.0M/44.7M [00:04<00:02, 6.05MB/s] 71%|███████   | 31.6M/44.7M [00:04<00:02, 5.96MB/s] 72%|███████▏  | 32.2M/44.7M [00:05<00:02, 6.04MB/s] 74%|███████▎  | 32.9M/44.7M [00:05<00:02, 5.84MB/s] 75%|███████▌  | 33.6M/44.7M [00:05<00:01, 6.19MB/s] 77%|███████▋  | 34.2M/44.7M [00:05<00:01, 5.62MB/s] 78%|███████▊  | 34.9M/44.7M [00:05<00:01, 5.72MB/s] 79%|███████▉  | 35.5M/44.7M [00:05<00:01, 5.83MB/s] 81%|████████  | 36.1M/44.7M [00:05<00:01, 5.55MB/s] 82%|████████▏ | 36.8M/44.7M [00:05<00:01, 5.81MB/s] 84%|████████▎ | 37.4M/44.7M [00:06<00:01, 5.97MB/s] 85%|████████▌ | 38.0M/44.7M [00:06<00:01, 6.03MB/s] 86%|████████▋ | 38.6M/44.7M [00:06<00:01, 6.01MB/s] 88%|████████▊ | 39.4M/44.7M [00:06<00:00, 6.01MB/s] 90%|████████▉ | 40.0M/44.7M [00:06<00:00, 6.06MB/s] 91%|█████████ | 40.6M/44.7M [00:06<00:00, 5.96MB/s] 92%|█████████▏| 41.2M/44.7M [00:06<00:00, 6.06MB/s] 94%|█████████▍| 41.9M/44.7M [00:06<00:00, 6.08MB/s] 95%|█████████▌| 42.5M/44.7M [00:06<00:00, 6.14MB/s] 97%|█████████▋| 43.1M/44.7M [00:07<00:00, 5.99MB/s] 98%|█████████▊| 43.8M/44.7M [00:07<00:00, 6.00MB/s] 99%|█████████▉| 44.4M/44.7M [00:07<00:00, 6.12MB/s]100%|██████████| 44.7M/44.7M [00:07<00:00, 6.45MB/s]
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False, enable_tmm=False, tmm_location=post_bilstm, enable_motion=True
-learning rate conv2d=0.0001
-learning rate conv1d=0.0001
-learning rate temporal_model=0.0001
-learning rate classifier=0.0001
-Loading model finished.
-Loading Dataprocessing
-Traceback (most recent call last):
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 339, in <module>
-    processor = Processor(args)
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 54, in __init__
-    self.model, self.optimizer = self.loading()
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 170, in loading
-    self.load_data()
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 231, in load_data
-    self.feeder = import_class(self.arg.feeder)
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 283, in import_class
-    mod = importlib.import_module(components[0])
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/importlib/__init__.py", line 126, in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
-  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
-  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
-  File "/home/nirmal/SlowFast/ZtmmNet/dataset/dataloader_video.py", line 10, in <module>
-    import pandas
-ModuleNotFoundError: No module named 'pandas'
-[1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mresnet18_tmm_v1[0m at: [34mhttps://wandb.ai/adhikareen-inha-university/tmmNet/runs/uem8ji8g[0m
-wandb: Currently logged in as: adhikareen (adhikareen-inha-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.21.1
-wandb: Run data is saved locally in ./resnet18_tmm_v1_log/wandb/run-20251020_231225-l65uuxi9
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run resnet18_tmm_v1
-wandb: ⭐️ View project at https://wandb.ai/adhikareen-inha-university/tmmNet
-wandb: 🚀 View run at https://wandb.ai/adhikareen-inha-university/tmmNet/runs/l65uuxi9
-/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
-  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
-Working tree is dirty. Patch:
-diff --git a/__pycache__/slr_network.cpython-310.pyc b/__pycache__/slr_network.cpython-310.pyc
-index b21b048..564252a 100644
-Binary files a/__pycache__/slr_network.cpython-310.pyc and b/__pycache__/slr_network.cpython-310.pyc differ
-diff --git a/configs/baseline.yaml b/configs/baseline.yaml
-index b916432..46e7e1f 100644
---- a/configs/baseline.yaml
-+++ b/configs/baseline.yaml
-@@ -4,13 +4,13 @@ dataset: phoenix2014
- #CSL-Daily
- # dataset: phoenix14-si5
- 
--work_dir: ./resent18_baseline/
-+work_dir: ./resnet18_tmm_v1_log/
- batch_size: 4
- random_seed: 0 
- test_batch_size: 4
- num_worker: 4
- device: 0
--log_interval: 100
-+log_interval: 10000
- eval_interval: 1
- save_interval: 10
-  
-diff --git a/configs/phoenix2014.yaml b/configs/phoenix2014.yaml
-index 66fb70c..910dcb1 100644
---- a/configs/phoenix2014.yaml
-+++ b/configs/phoenix2014.yaml
-@@ -1,7 +1,8 @@
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner_original
- # deblur_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner
--dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+# dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+dataset_root: /nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner # RVRT delburred dataset
- # dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner 
-diff --git a/main.py b/main.py
-index a821095..f812393 100644
---- a/main.py
-+++ b/main.py
-@@ -31,6 +31,11 @@ class Processor():
-         shutil.copy2('./modules/tconv.py', self.arg.work_dir)
-         shutil.copy2('./modules/resnet.py', self.arg.work_dir)
-         shutil.copy2('./modules/gcn_lib/temgraph.py', self.arg.work_dir)
-+        if getattr(self.arg, "ablation_cfg", None):
-+            try:
-+                shutil.copy2(self.arg.ablation_cfg, self.arg.work_dir)
-+            except Exception:
-+                pass
-         torch.backends.cudnn.benchmark = True
-         if type(self.arg.device) is not int:
-             init_distributed_mode(self.arg)
-@@ -281,24 +286,64 @@ def import_class(name):
- 
- 
- if __name__ == '__main__':
--    sparser = utils.get_parser()
--    p = sparser.parse_args()
--    if p.config is not None:
--        with open(p.config, 'r') as f:
--            try:
--                default_arg = yaml.load(f, Loader=yaml.FullLoader)
--            except AttributeError:
--                default_arg = yaml.load(f)
--        key = vars(p).keys()
--        for k in default_arg.keys():
--            if k not in key:
--                print('WRONG ARG: {}'.format(k))
--                assert (k in key)
--        sparser.set_defaults(**default_arg)
--    args = sparser.parse_args()
-+    # sparser = utils.get_parser()
-+    # p = sparser.parse_args()
-+    # if p.config is not None:
-+    #     with open(p.config, 'r') as f:
-+    #         try:
-+    #             default_arg = yaml.load(f, Loader=yaml.FullLoader)
-+    #         except AttributeError:
-+    #             default_arg = yaml.load(f)
-+    #     key = vars(p).keys()
-+    #     for k in default_arg.keys():
-+    #         if k not in key:
-+    #             print('WRONG ARG: {}'.format(k))
-+    #             assert (k in key)
-+    #     sparser.set_defaults(**default_arg)
-+    # args = sparser.parse_args()
-+    # with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-+    #     args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+    # processor = Processor(args)
-+    # utils.pack_code("./", args.work_dir)
-+    # processor.start()
-+ 
-+    from argparse import Namespace
-+    from utils.parameters import load_yaml, merge_cfgs, get_parser
-+
-+    # 1) Build parser (must include --config and --ablation_cfg)
-+    parser = get_parser()
-+    # First parse: just to read which files to load
-+    cmd = parser.parse_args()
-+
-+    # 2) Seed defaults with baseline.yaml if provided
-+    if cmd.config is not None:
-+        base_cfg = load_yaml(cmd.config)  # dict from baseline.yaml
-+        parser.set_defaults(**base_cfg)
-+    else:
-+        base_cfg = {}
-+
-+    # 3) Merge ablation.yaml on top (if provided), then set as defaults
-+    #    This ensures ablation overrides baseline, but CLI still wins.
-+    if getattr(cmd, "ablation_cfg", None):
-+        merged = merge_cfgs(base_cfg, cmd.ablation_cfg)  # dict
-+        parser.set_defaults(**merged)
-+
-+    # 4) Re-parse with new defaults so CLI flags remain highest precedence
-+    args = parser.parse_args()
-+
-+    # 5) Load dataset_info (unchanged)
-     with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-         args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+
-+    # 6) Start processor
-     processor = Processor(args)
-+
-+    # 7) Optional: archive configs for reproducibility
-     utils.pack_code("./", args.work_dir)
-+    # copy the *actual* config files used
-+    if cmd.config:
-+        shutil.copy2(cmd.config, os.path.join(args.work_dir, os.path.basename(cmd.config)))
-+    if getattr(cmd, "ablation_cfg", None):
-+        shutil.copy2(cmd.ablation_cfg, os.path.join(args.work_dir, os.path.basename(cmd.ablation_cfg)))
-+
-     processor.start()
-- 
-diff --git a/main.sh b/main.sh
-index b4d44be..2e91b6a 100644
---- a/main.sh
-+++ b/main.sh
-@@ -1 +1 @@
--python main.py 2>&1 | tee -a resent18_baseline_log.txt
-\ No newline at end of file
-+python main.py 2>&1 | tee -a resnet18_tmm_v1_log.txt
-\ No newline at end of file
-diff --git a/seq_scripts.py b/seq_scripts.py
-index 05f7807..b831ed4 100644
---- a/seq_scripts.py
-+++ b/seq_scripts.py
-@@ -57,6 +57,19 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
-         loss_value.append(loss.item())
-         step = global_step_base + batch_idx
-         if batch_idx % recoder.log_interval == 0 and is_main_process():
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                # g: (T', B, 1) or (T', B, d). Flatten safely.
-+                gm = g.float().mean().item()
-+                gs = g.float().std().item()
-+                g50 = (g > 0.5).float().mean().item()
-+                recoder.log_metrics({
-+                    "epoch": epoch_idx,
-+                    "train/tmm_gate_mean": float(gm),
-+                    "train/tmm_gate_std": float(gs),
-+                    "train/tmm_gate_frac>0.5": float(g50),
-+                }, step=step)
-+
-             # recoder.print_log(
-             #     '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
-             #         .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
-@@ -90,7 +103,13 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     model.eval()
-     results=defaultdict(dict)
- 
--    for batch_idx, data in enumerate(tqdm(loader)):
-+    gate_sum = 0.0
-+    gate_sqsum = 0.0
-+    gate_cnt = 0
-+    gate_above = 0.0
-+
-+
-+    for batch_idx, data in enumerate(tqdm(loader, disable=not is_main_process())):
-         recoder.record_timer("device")
-         vid = device.data_to_device(data[0])
-         vid_lgt = device.data_to_device(data[1])
-@@ -100,6 +119,18 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-         gloss = [d['label'] for d in data[-1]]
-         with torch.no_grad():
-             ret_dict = model(vid, vid_lgt, label=label, label_lgt=label_lgt)
-+
-+
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                g = g.float()
-+                gate_sum   += g.sum().item()
-+                gate_sqsum += (g * g).sum().item()
-+                gate_cnt   += g.numel()
-+                gate_above += (g > 0.5).float().sum().item()
-+
-+
-+
-             for inf, conv_sents, recognized_sents, gl in zip(info, ret_dict['conv_sents'], ret_dict['recognized_sents'], gloss):
-                 results[inf]['conv_sents'] = conv_sents
-                 results[inf]['recognized_sents'] = recognized_sents
-@@ -119,6 +150,15 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     recoder.print_log('\tEpoch: {} {} done. LSTM wer: {:.4f}  ins:{:.4f}, del:{:.4f}'.format(
-         epoch, mode, wer_results['wer'], wer_results['ins'], wer_results['del']), f"{work_dir}/{mode}.txt")
-     
-+    if gate_cnt > 0:
-+        gate_mean = gate_sum / gate_cnt
-+        gate_var  = max(gate_sqsum / gate_cnt - gate_mean * gate_mean, 0.0)
-+        gate_std  = gate_var ** 0.5
-+        gate_frac = gate_above / gate_cnt
-+    else:
-+        gate_mean = gate_std = gate_frac = float('nan')
-+
-+    
-     # wandb: DEV/TEST curves vs epoch
-     if is_main_process():
-         metrics = {
-@@ -129,7 +169,17 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-             f"{mode}/INS": float(reg_per['ins']),
-             f"{mode}/DEL": float(reg_per['del']),
-         }
--        recoder.log_metrics(metrics)
-+
-+        # add TMM stats if present
-+        if gate_cnt > 0:
-+            metrics.update({
-+                f"{mode}/tmm_gate_mean": float(gate_mean),
-+                f"{mode}/tmm_gate_std": float(gate_std),
-+                f"{mode}/tmm_gate_frac>0.5": float(gate_frac),
-+            })
-+
-+            
-+        recoder.log_metrics(metrics, step=epoch)
- 
-     return {"wer":reg_per['wer'], "ins":reg_per['ins'], 'del':reg_per['del']}
-  
-diff --git a/slr_network.py b/slr_network.py
-index d41837c..6ed8644 100644
---- a/slr_network.py
-+++ b/slr_network.py
-@@ -11,6 +11,12 @@ from modules.criterions import SeqKD
- from modules import BiLSTMLayer, TemporalConv
- import modules.resnet as resnet
- 
-+
-+####################################
-+from modules.tmm import MotionDiffEncoder, TemporalMotionMix
-+####################################
-+
-+
- class Identity(nn.Module):
-     def __init__(self):
-         super(Identity, self).__init__()
-@@ -34,7 +40,12 @@ class SLRModel(nn.Module):
-     def __init__(
-             self, num_classes, c2d_type, conv_type, use_bn=False,
-             hidden_size=1024, gloss_dict=None, loss_weights=None,
--            weight_norm=True, share_classifier=True, use_graph=False
-+            weight_norm=True, share_classifier=True, use_graph=False,
-+            # NEW for TMM
-+            enable_tmm=False,
-+            tmm_location="post_bilstm",
-+            tmm_alpha=0.2,
-+            enable_motion=True,
-     ):
-         super(SLRModel, self).__init__()
-         print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}")
-@@ -63,6 +74,41 @@ class SLRModel(nn.Module):
-         if share_classifier:
-             self.conv1d.fc = self.classifier
- 
-+        ############################################
-+        self.enable_tmm = enable_tmm
-+        self.tmm_location = tmm_location
-+        self.enable_motion = enable_motion
-+
-+        if self.enable_tmm:
-+            self.motion_encoder = MotionDiffEncoder(in_ch=3, feat_dim=hidden_size) if self.enable_motion else None
-+            self.tmm = TemporalMotionMix(d=hidden_size, alpha=tmm_alpha)
-+        else:
-+            self.motion_encoder = None
-+            self.tmm = None
-+
-+        print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}, "
-+                f"enable_tmm={self.enable_tmm}, tmm_location={self.tmm_location}, enable_motion={self.enable_motion}")
-+
-+        ############################################
-+
-+
-+    ################################################
-+    def _align_motion_to_feat(self, motion_B_T_D, feat_len, total_T):
-+        """
-+        motion_B_T_D: (B, T_raw, D)
-+        feat_len: (B,) after TCN (all equal in this repo)
-+        total_T: int (raw T)
-+        Returns (T’, B, D) aligned to sequence feature length
-+        """
-+        B, T_raw, D = motion_B_T_D.shape
-+        T_new = int(feat_len[0].item())
-+        # simple uniform sampling
-+        idx = torch.linspace(0, T_raw-1, steps=T_new).round().long().to(motion_B_T_D.device)
-+        m = motion_B_T_D[:, idx]                    # (B, T’, D)
-+        m = m.permute(1, 0, 2).contiguous()         # (T’, B, D)
-+        return m
-+    ################################################
-+
-     def backward_hook(self, module, grad_input, grad_output):
-         for g in grad_input:
-             g[g != g] = 0
-@@ -82,28 +128,90 @@ class SLRModel(nn.Module):
-         if len(x.shape) == 5:
-             # videos
-             batch, temp, channel, height, width = x.shape
--            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct
-+            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct # (B, 512, T) -> (B, 512, T)
-+            ############################################
-+            # prepare motion if needed
-+            if self.enable_tmm and self.enable_motion:
-+                # MotionDiffEncoder expects (B, T, C, H, W)
-+                with torch.no_grad(): # motion is a cue; you can also learn end-to-end by removing no_grad
-+                    m_raw = self.motion_encoder(x) # (B, T, hidden_size)
-+            else:
-+                m_raw = None
-+            ############################################
-         else:
-+            # features path (already (B, 512, T))
-             framewise = x
-+            m_raw = None # cannot compute motion without raw frames
-+
-+
-+        # TemporalConv
-         conv1d_outputs = self.conv1d(framewise, len_x)
-+
-+        ############################################
-         # x: T, B, C
--        x = conv1d_outputs['visual_feat']
--        lgt = conv1d_outputs['feat_len'].cpu()
--        tm_outputs = self.temporal_model(x, lgt)
--        outputs = self.classifier(tm_outputs['predictions'])
-+        # x = conv1d_outputs['visual_feat']
-+        z_tcn = conv1d_outputs['visual_feat'] # (T', B, H)
-+        ############################################
-+
-+        
-+        lgt = conv1d_outputs['feat_len'].cpu() # (B,)
-+
-+        ############################################
-+        # ------- TMM location: pre_bilstm -------
-+        if self.enable_tmm and self.tmm_location == "pre_bilstm":
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
-+            else:
-+                # fallback: zero motion
-+                m_aligned = torch.zeros_like(z_tcn)
-+            z_clean, g = self.tmm(z_tcn, m_aligned) # (T', B, H) , (T', B, 1)
-+            z_for_lstm = z_clean
-+        else:
-+            z_for_lstm = z_tcn
-+
-+        # ------------ BiLSTM ------------
-+        # tm_outputs = self.temporal_model(x, lgt)
-+        tm_outputs = self.temporal_model(z_for_lstm, lgt)
-+        z_seq = tm_outputs['predictions']           # (T’, B, H)
-+
-+
-+        ############################################
-+        # ---- TMM location: post_bilstm ----
-+        if self.enable_tmm and self.tmm_location == 'post_bilstm':
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, T)
-+            else:
-+                m_aligned = torch.zeros_like(z_seq)
-+            z_clean, g = self.tmm(z_seq, m_aligned)
-+            z_out = z_clean
-+        else:
-+            z_out = z_seq
-+
-+        # ---- Classifiers ----
-+        seq_logits = self.classifier(z_out)                     # (T’, B, C)
-+        conv_logits = conv1d_outputs['conv_logits']             # (T’, B, C)
-+
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+
-+
-         pred = None if self.training \
--            else self.decoder.decode(outputs, lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(seq_logits, lgt, batch_first=False, probs=False)
-         conv_pred = None if self.training \
--            else self.decoder.decode(conv1d_outputs['conv_logits'], lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(conv_logits, lgt, batch_first=False, probs=False)
-+        
-+
-         return {
-             "framewise_features": framewise,
--            "visual_features": x,
--            "temproal_features": tm_outputs['predictions'],
-+            "visual_features": z_tcn,
-+            "temproal_features": z_seq,
-             "feat_len": lgt,
--            "conv_logits": conv1d_outputs['conv_logits'],
--            "sequence_logits": outputs,
-+            "conv_logits": conv_logits,
-+            "sequence_logits": seq_logits,
-             "conv_sents": conv_pred,
-             "recognized_sents": pred,
-+            # OPTIONAL: expose gate for diagnostics
-+            "tmm_gate": g if (self.enable_tmm) else None,            
-         }
- 
-     def criterion_calculation(self, ret_dict, label, label_lgt):
-diff --git a/utils/__pycache__/parameters.cpython-310.pyc b/utils/__pycache__/parameters.cpython-310.pyc
-index 9434124..54dd39c 100644
-Binary files a/utils/__pycache__/parameters.cpython-310.pyc and b/utils/__pycache__/parameters.cpython-310.pyc differ
-diff --git a/utils/__pycache__/record.cpython-310.pyc b/utils/__pycache__/record.cpython-310.pyc
-index 288c98e..7cae435 100644
-Binary files a/utils/__pycache__/record.cpython-310.pyc and b/utils/__pycache__/record.cpython-310.pyc differ
-diff --git a/utils/parameters.py b/utils/parameters.py
-index a113c69..f94d412 100644
---- a/utils/parameters.py
-+++ b/utils/parameters.py
-@@ -1,4 +1,32 @@
--import argparse
-+import argparse, yaml
-+from copy import deepcopy
-+
-+
-+import argparse, yaml
-+from copy import deepcopy
-+
-+def load_yaml(path: str):
-+    with open(path, "r") as f:
-+        return yaml.load(f, Loader=yaml.FullLoader)
-+
-+def _deep_update(dst: dict, src: dict):
-+    # recursively update dst with src
-+    for k, v in src.items():
-+        if isinstance(v, dict) and isinstance(dst.get(k), dict):
-+            _deep_update(dst[k], v)
-+        else:
-+            dst[k] = v
-+
-+def merge_dicts(base: dict, over: dict) -> dict:
-+    out = deepcopy(base)
-+    _deep_update(out, over)
-+    return out
-+
-+def merge_cfgs(baseline_cfg: dict, ablation_cfg_path: str | None) -> dict:
-+    if not ablation_cfg_path:
-+        return deepcopy(baseline_cfg)
-+    ablation_cfg = load_yaml(ablation_cfg_path)
-+    return merge_dicts(baseline_cfg, ablation_cfg)
- 
- 
- def get_parser():
-@@ -154,9 +182,9 @@ def get_parser():
-     parser.add_argument('--local_rank', default=0, type=int)
-     parser.add_argument('--dist-url', default='env://',
-                         help='url used to set up distributed training')
--
--
--
-+    
-+    parser.add_argument('--ablation_cfg', type=str, default=None,
-+                        help='Optional YAML to override baseline config for ablation study.')
- 
-     return parser
- 
-diff --git a/utils/record.py b/utils/record.py
-index fc2d3ea..1cfc9fe 100644
---- a/utils/record.py
-+++ b/utils/record.py
-@@ -16,7 +16,7 @@ class Recorder(object):
-             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
-             if proj:
-                 import wandb
--                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_baseline')
-+                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_tmm_v1')
-                 wandb_dir = work_dir.rstrip("/")
-                 wandb.init(project=proj, name=run_name, dir=wandb_dir)
-                 self.wandb = wandb
-@@ -27,12 +27,13 @@ class Recorder(object):
-         # --- end wandb ---
- 
-         if self.wandb is not None:
-+            pass
-             # make epochs the x-axis for eval metrics
--            self.wandb.define_metric("epoch")
--            self.wandb.define_metric("dev/*", step_metric="epoch")
--            self.wandb.define_metric("test/*", step_metric="epoch")
--            self.wandb.define_metric("train/*", step_metric="step")
--            self.wandb.define_metric("train_epoch/*", step_metric="epoch")
-+            # self.wandb.define_metric("epoch")
-+            # self.wandb.define_metric("dev/*", step_metric="epoch")
-+            # self.wandb.define_metric("test/*", step_metric="epoch")
-+            # self.wandb.define_metric("train/*", step_metric="step")
-+            # self.wandb.define_metric("train_epoch/*", step_metric="epoch")
- 
-     def log_metrics(self, metrics: dict, step=None):
-         if self.wandb is not None:
-
-[wandb] initialized project=tmmNet name=resnet18_tmm_v1
-[0]
-Loading model
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False, enable_tmm=False, tmm_location=post_bilstm, enable_motion=True
-learning rate conv2d=0.0001
-learning rate conv1d=0.0001
-learning rate temporal_model=0.0001
-learning rate classifier=0.0001
-Loading model finished.
-Loading Dataprocessing
-train 5671
-Apply training transform.
-
-train 5671
-Apply testing transform.
-
-dev 540
-Apply testing transform.
-
-test 629
-Apply testing transform.
-
-Loading Dataprocessing finished.
-[ Mon Oct 20 23:12:28 2025 ] Parameters:
-{'work_dir': './resnet18_tmm_v1_log/', 'config': './configs/baseline.yaml', 'random_fix': True, 'device': 0, 'phase': 'train', 'save_interval': 10, 'random_seed': 0, 'eval_interval': 1, 'print_log': True, 'log_interval': 10000, 'evaluate_tool': 'python', 'feeder': 'dataset.dataloader_video.BaseFeeder', 'dataset': 'phoenix2014', 'dataset_info': {'dataset_root': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'dict_path': './preprocess/phoenix2014/gloss_dict.npy', 'evaluation_dir': './evaluation/slr_eval', 'evaluation_prefix': 'phoenix2014-groundtruth'}, 'num_worker': 4, 'feeder_args': {'mode': 'test', 'datatype': 'video', 'num_gloss': -1, 'drop_ratio': 1.0, 'frame_interval': 1, 'image_scale': 1.0, 'input_size': 224, 'prefix': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'transform_mode': False}, 'model': 'slr_network.SLRModel', 'model_args': {'num_classes': 1296, 'c2d_type': 'resnet18', 'conv_type': 2, 'use_bn': 1, 'share_classifier': True, 'weight_norm': True, 'use_graph': False}, 'load_weights': False, 'load_checkpoints': False, 'decode_mode': 'beam', 'ignore_weights': [], 'batch_size': 4, 'test_batch_size': 4, 'loss_weights': {'SeqCTC': 1.0, 'ConvCTC': 1.0, 'Dist': 25.0}, 'optimizer_args': {'optimizer': 'Adam', 'learning_rate': {}, 'step': [20, 30, 35], 'learning_ratio': 1, 'scheduler': 'ScheaL', 'weight_decay': 0.0001, 'start_epoch': 0, 'num_epoch': 80, 'nesterov': False}, 'num_epoch': 80, 'world_size': 1, 'local_rank': 0, 'dist_url': 'env://', 'ablation_cfg': None}
-
-  0%|          | 0/1417 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/1417 [00:35<?, ?it/s]Epoch 0:   0%|          | 0/1417 [00:35<?, ?it/s, loss=590.6326, lr=0.000100]Epoch 0:   0%|          | 1/1417 [00:35<13:51:27, 35.23s/it, loss=590.6326, lr=0.000100]Epoch 0:   0%|          | 2/1417 [00:35<5:46:04, 14.67s/it, loss=590.6326, lr=0.000100] Epoch 0:   0%|          | 3/1417 [00:35<3:11:03,  8.11s/it, loss=590.6326, lr=0.000100]Epoch 0:   0%|          | 4/1417 [00:36<1:58:23,  5.03s/it, loss=590.6326, lr=0.000100]Epoch 0:   0%|          | 5/1417 [00:47<2:48:21,  7.15s/it, loss=590.6326, lr=0.000100]wandb: Currently logged in as: adhikareen (adhikareen-inha-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.21.1
-wandb: Run data is saved locally in ./resnet18_tmm_v1_log/wandb/run-20251020_231409-ylnp7f4p
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run resnet18_tmm_v1
-wandb: ⭐️ View project at https://wandb.ai/adhikareen-inha-university/tmmNet
-wandb: 🚀 View run at https://wandb.ai/adhikareen-inha-university/tmmNet/runs/ylnp7f4p
-/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
-  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
-Working tree is dirty. Patch:
-diff --git a/__pycache__/slr_network.cpython-310.pyc b/__pycache__/slr_network.cpython-310.pyc
-index b21b048..564252a 100644
-Binary files a/__pycache__/slr_network.cpython-310.pyc and b/__pycache__/slr_network.cpython-310.pyc differ
-diff --git a/configs/baseline.yaml b/configs/baseline.yaml
-index b916432..46e7e1f 100644
---- a/configs/baseline.yaml
-+++ b/configs/baseline.yaml
-@@ -4,13 +4,13 @@ dataset: phoenix2014
- #CSL-Daily
- # dataset: phoenix14-si5
- 
--work_dir: ./resent18_baseline/
-+work_dir: ./resnet18_tmm_v1_log/
- batch_size: 4
- random_seed: 0 
- test_batch_size: 4
- num_worker: 4
- device: 0
--log_interval: 100
-+log_interval: 10000
- eval_interval: 1
- save_interval: 10
-  
-diff --git a/configs/phoenix2014.yaml b/configs/phoenix2014.yaml
-index 66fb70c..910dcb1 100644
---- a/configs/phoenix2014.yaml
-+++ b/configs/phoenix2014.yaml
-@@ -1,7 +1,8 @@
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner_original
- # deblur_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner
--dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+# dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+dataset_root: /nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner # RVRT delburred dataset
- # dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner 
-diff --git a/main.py b/main.py
-index a821095..f812393 100644
---- a/main.py
-+++ b/main.py
-@@ -31,6 +31,11 @@ class Processor():
-         shutil.copy2('./modules/tconv.py', self.arg.work_dir)
-         shutil.copy2('./modules/resnet.py', self.arg.work_dir)
-         shutil.copy2('./modules/gcn_lib/temgraph.py', self.arg.work_dir)
-+        if getattr(self.arg, "ablation_cfg", None):
-+            try:
-+                shutil.copy2(self.arg.ablation_cfg, self.arg.work_dir)
-+            except Exception:
-+                pass
-         torch.backends.cudnn.benchmark = True
-         if type(self.arg.device) is not int:
-             init_distributed_mode(self.arg)
-@@ -281,24 +286,64 @@ def import_class(name):
- 
- 
- if __name__ == '__main__':
--    sparser = utils.get_parser()
--    p = sparser.parse_args()
--    if p.config is not None:
--        with open(p.config, 'r') as f:
--            try:
--                default_arg = yaml.load(f, Loader=yaml.FullLoader)
--            except AttributeError:
--                default_arg = yaml.load(f)
--        key = vars(p).keys()
--        for k in default_arg.keys():
--            if k not in key:
--                print('WRONG ARG: {}'.format(k))
--                assert (k in key)
--        sparser.set_defaults(**default_arg)
--    args = sparser.parse_args()
-+    # sparser = utils.get_parser()
-+    # p = sparser.parse_args()
-+    # if p.config is not None:
-+    #     with open(p.config, 'r') as f:
-+    #         try:
-+    #             default_arg = yaml.load(f, Loader=yaml.FullLoader)
-+    #         except AttributeError:
-+    #             default_arg = yaml.load(f)
-+    #     key = vars(p).keys()
-+    #     for k in default_arg.keys():
-+    #         if k not in key:
-+    #             print('WRONG ARG: {}'.format(k))
-+    #             assert (k in key)
-+    #     sparser.set_defaults(**default_arg)
-+    # args = sparser.parse_args()
-+    # with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-+    #     args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+    # processor = Processor(args)
-+    # utils.pack_code("./", args.work_dir)
-+    # processor.start()
-+ 
-+    from argparse import Namespace
-+    from utils.parameters import load_yaml, merge_cfgs, get_parser
-+
-+    # 1) Build parser (must include --config and --ablation_cfg)
-+    parser = get_parser()
-+    # First parse: just to read which files to load
-+    cmd = parser.parse_args()
-+
-+    # 2) Seed defaults with baseline.yaml if provided
-+    if cmd.config is not None:
-+        base_cfg = load_yaml(cmd.config)  # dict from baseline.yaml
-+        parser.set_defaults(**base_cfg)
-+    else:
-+        base_cfg = {}
-+
-+    # 3) Merge ablation.yaml on top (if provided), then set as defaults
-+    #    This ensures ablation overrides baseline, but CLI still wins.
-+    if getattr(cmd, "ablation_cfg", None):
-+        merged = merge_cfgs(base_cfg, cmd.ablation_cfg)  # dict
-+        parser.set_defaults(**merged)
-+
-+    # 4) Re-parse with new defaults so CLI flags remain highest precedence
-+    args = parser.parse_args()
-+
-+    # 5) Load dataset_info (unchanged)
-     with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-         args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+
-+    # 6) Start processor
-     processor = Processor(args)
-+
-+    # 7) Optional: archive configs for reproducibility
-     utils.pack_code("./", args.work_dir)
-+    # copy the *actual* config files used
-+    if cmd.config:
-+        shutil.copy2(cmd.config, os.path.join(args.work_dir, os.path.basename(cmd.config)))
-+    if getattr(cmd, "ablation_cfg", None):
-+        shutil.copy2(cmd.ablation_cfg, os.path.join(args.work_dir, os.path.basename(cmd.ablation_cfg)))
-+
-     processor.start()
-- 
-diff --git a/main.sh b/main.sh
-index b4d44be..8d5f33f 100644
---- a/main.sh
-+++ b/main.sh
-@@ -1 +1 @@
--python main.py 2>&1 | tee -a resent18_baseline_log.txt
-\ No newline at end of file
-+python main.py --ablation_cfg configs/ablation_tmm.yaml 2>&1 | tee -a resnet18_tmm_v1_log.txt
-\ No newline at end of file
-diff --git a/seq_scripts.py b/seq_scripts.py
-index 05f7807..b831ed4 100644
---- a/seq_scripts.py
-+++ b/seq_scripts.py
-@@ -57,6 +57,19 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
-         loss_value.append(loss.item())
-         step = global_step_base + batch_idx
-         if batch_idx % recoder.log_interval == 0 and is_main_process():
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                # g: (T', B, 1) or (T', B, d). Flatten safely.
-+                gm = g.float().mean().item()
-+                gs = g.float().std().item()
-+                g50 = (g > 0.5).float().mean().item()
-+                recoder.log_metrics({
-+                    "epoch": epoch_idx,
-+                    "train/tmm_gate_mean": float(gm),
-+                    "train/tmm_gate_std": float(gs),
-+                    "train/tmm_gate_frac>0.5": float(g50),
-+                }, step=step)
-+
-             # recoder.print_log(
-             #     '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
-             #         .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
-@@ -90,7 +103,13 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     model.eval()
-     results=defaultdict(dict)
- 
--    for batch_idx, data in enumerate(tqdm(loader)):
-+    gate_sum = 0.0
-+    gate_sqsum = 0.0
-+    gate_cnt = 0
-+    gate_above = 0.0
-+
-+
-+    for batch_idx, data in enumerate(tqdm(loader, disable=not is_main_process())):
-         recoder.record_timer("device")
-         vid = device.data_to_device(data[0])
-         vid_lgt = device.data_to_device(data[1])
-@@ -100,6 +119,18 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-         gloss = [d['label'] for d in data[-1]]
-         with torch.no_grad():
-             ret_dict = model(vid, vid_lgt, label=label, label_lgt=label_lgt)
-+
-+
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                g = g.float()
-+                gate_sum   += g.sum().item()
-+                gate_sqsum += (g * g).sum().item()
-+                gate_cnt   += g.numel()
-+                gate_above += (g > 0.5).float().sum().item()
-+
-+
-+
-             for inf, conv_sents, recognized_sents, gl in zip(info, ret_dict['conv_sents'], ret_dict['recognized_sents'], gloss):
-                 results[inf]['conv_sents'] = conv_sents
-                 results[inf]['recognized_sents'] = recognized_sents
-@@ -119,6 +150,15 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     recoder.print_log('\tEpoch: {} {} done. LSTM wer: {:.4f}  ins:{:.4f}, del:{:.4f}'.format(
-         epoch, mode, wer_results['wer'], wer_results['ins'], wer_results['del']), f"{work_dir}/{mode}.txt")
-     
-+    if gate_cnt > 0:
-+        gate_mean = gate_sum / gate_cnt
-+        gate_var  = max(gate_sqsum / gate_cnt - gate_mean * gate_mean, 0.0)
-+        gate_std  = gate_var ** 0.5
-+        gate_frac = gate_above / gate_cnt
-+    else:
-+        gate_mean = gate_std = gate_frac = float('nan')
-+
-+    
-     # wandb: DEV/TEST curves vs epoch
-     if is_main_process():
-         metrics = {
-@@ -129,7 +169,17 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-             f"{mode}/INS": float(reg_per['ins']),
-             f"{mode}/DEL": float(reg_per['del']),
-         }
--        recoder.log_metrics(metrics)
-+
-+        # add TMM stats if present
-+        if gate_cnt > 0:
-+            metrics.update({
-+                f"{mode}/tmm_gate_mean": float(gate_mean),
-+                f"{mode}/tmm_gate_std": float(gate_std),
-+                f"{mode}/tmm_gate_frac>0.5": float(gate_frac),
-+            })
-+
-+            
-+        recoder.log_metrics(metrics, step=epoch)
- 
-     return {"wer":reg_per['wer'], "ins":reg_per['ins'], 'del':reg_per['del']}
-  
-diff --git a/slr_network.py b/slr_network.py
-index d41837c..6ed8644 100644
---- a/slr_network.py
-+++ b/slr_network.py
-@@ -11,6 +11,12 @@ from modules.criterions import SeqKD
- from modules import BiLSTMLayer, TemporalConv
- import modules.resnet as resnet
- 
-+
-+####################################
-+from modules.tmm import MotionDiffEncoder, TemporalMotionMix
-+####################################
-+
-+
- class Identity(nn.Module):
-     def __init__(self):
-         super(Identity, self).__init__()
-@@ -34,7 +40,12 @@ class SLRModel(nn.Module):
-     def __init__(
-             self, num_classes, c2d_type, conv_type, use_bn=False,
-             hidden_size=1024, gloss_dict=None, loss_weights=None,
--            weight_norm=True, share_classifier=True, use_graph=False
-+            weight_norm=True, share_classifier=True, use_graph=False,
-+            # NEW for TMM
-+            enable_tmm=False,
-+            tmm_location="post_bilstm",
-+            tmm_alpha=0.2,
-+            enable_motion=True,
-     ):
-         super(SLRModel, self).__init__()
-         print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}")
-@@ -63,6 +74,41 @@ class SLRModel(nn.Module):
-         if share_classifier:
-             self.conv1d.fc = self.classifier
- 
-+        ############################################
-+        self.enable_tmm = enable_tmm
-+        self.tmm_location = tmm_location
-+        self.enable_motion = enable_motion
-+
-+        if self.enable_tmm:
-+            self.motion_encoder = MotionDiffEncoder(in_ch=3, feat_dim=hidden_size) if self.enable_motion else None
-+            self.tmm = TemporalMotionMix(d=hidden_size, alpha=tmm_alpha)
-+        else:
-+            self.motion_encoder = None
-+            self.tmm = None
-+
-+        print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}, "
-+                f"enable_tmm={self.enable_tmm}, tmm_location={self.tmm_location}, enable_motion={self.enable_motion}")
-+
-+        ############################################
-+
-+
-+    ################################################
-+    def _align_motion_to_feat(self, motion_B_T_D, feat_len, total_T):
-+        """
-+        motion_B_T_D: (B, T_raw, D)
-+        feat_len: (B,) after TCN (all equal in this repo)
-+        total_T: int (raw T)
-+        Returns (T’, B, D) aligned to sequence feature length
-+        """
-+        B, T_raw, D = motion_B_T_D.shape
-+        T_new = int(feat_len[0].item())
-+        # simple uniform sampling
-+        idx = torch.linspace(0, T_raw-1, steps=T_new).round().long().to(motion_B_T_D.device)
-+        m = motion_B_T_D[:, idx]                    # (B, T’, D)
-+        m = m.permute(1, 0, 2).contiguous()         # (T’, B, D)
-+        return m
-+    ################################################
-+
-     def backward_hook(self, module, grad_input, grad_output):
-         for g in grad_input:
-             g[g != g] = 0
-@@ -82,28 +128,90 @@ class SLRModel(nn.Module):
-         if len(x.shape) == 5:
-             # videos
-             batch, temp, channel, height, width = x.shape
--            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct
-+            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct # (B, 512, T) -> (B, 512, T)
-+            ############################################
-+            # prepare motion if needed
-+            if self.enable_tmm and self.enable_motion:
-+                # MotionDiffEncoder expects (B, T, C, H, W)
-+                with torch.no_grad(): # motion is a cue; you can also learn end-to-end by removing no_grad
-+                    m_raw = self.motion_encoder(x) # (B, T, hidden_size)
-+            else:
-+                m_raw = None
-+            ############################################
-         else:
-+            # features path (already (B, 512, T))
-             framewise = x
-+            m_raw = None # cannot compute motion without raw frames
-+
-+
-+        # TemporalConv
-         conv1d_outputs = self.conv1d(framewise, len_x)
-+
-+        ############################################
-         # x: T, B, C
--        x = conv1d_outputs['visual_feat']
--        lgt = conv1d_outputs['feat_len'].cpu()
--        tm_outputs = self.temporal_model(x, lgt)
--        outputs = self.classifier(tm_outputs['predictions'])
-+        # x = conv1d_outputs['visual_feat']
-+        z_tcn = conv1d_outputs['visual_feat'] # (T', B, H)
-+        ############################################
-+
-+        
-+        lgt = conv1d_outputs['feat_len'].cpu() # (B,)
-+
-+        ############################################
-+        # ------- TMM location: pre_bilstm -------
-+        if self.enable_tmm and self.tmm_location == "pre_bilstm":
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
-+            else:
-+                # fallback: zero motion
-+                m_aligned = torch.zeros_like(z_tcn)
-+            z_clean, g = self.tmm(z_tcn, m_aligned) # (T', B, H) , (T', B, 1)
-+            z_for_lstm = z_clean
-+        else:
-+            z_for_lstm = z_tcn
-+
-+        # ------------ BiLSTM ------------
-+        # tm_outputs = self.temporal_model(x, lgt)
-+        tm_outputs = self.temporal_model(z_for_lstm, lgt)
-+        z_seq = tm_outputs['predictions']           # (T’, B, H)
-+
-+
-+        ############################################
-+        # ---- TMM location: post_bilstm ----
-+        if self.enable_tmm and self.tmm_location == 'post_bilstm':
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, T)
-+            else:
-+                m_aligned = torch.zeros_like(z_seq)
-+            z_clean, g = self.tmm(z_seq, m_aligned)
-+            z_out = z_clean
-+        else:
-+            z_out = z_seq
-+
-+        # ---- Classifiers ----
-+        seq_logits = self.classifier(z_out)                     # (T’, B, C)
-+        conv_logits = conv1d_outputs['conv_logits']             # (T’, B, C)
-+
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+
-+
-         pred = None if self.training \
--            else self.decoder.decode(outputs, lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(seq_logits, lgt, batch_first=False, probs=False)
-         conv_pred = None if self.training \
--            else self.decoder.decode(conv1d_outputs['conv_logits'], lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(conv_logits, lgt, batch_first=False, probs=False)
-+        
-+
-         return {
-             "framewise_features": framewise,
--            "visual_features": x,
--            "temproal_features": tm_outputs['predictions'],
-+            "visual_features": z_tcn,
-+            "temproal_features": z_seq,
-             "feat_len": lgt,
--            "conv_logits": conv1d_outputs['conv_logits'],
--            "sequence_logits": outputs,
-+            "conv_logits": conv_logits,
-+            "sequence_logits": seq_logits,
-             "conv_sents": conv_pred,
-             "recognized_sents": pred,
-+            # OPTIONAL: expose gate for diagnostics
-+            "tmm_gate": g if (self.enable_tmm) else None,            
-         }
- 
-     def criterion_calculation(self, ret_dict, label, label_lgt):
-diff --git a/utils/__pycache__/parameters.cpython-310.pyc b/utils/__pycache__/parameters.cpython-310.pyc
-index 9434124..54dd39c 100644
-Binary files a/utils/__pycache__/parameters.cpython-310.pyc and b/utils/__pycache__/parameters.cpython-310.pyc differ
-diff --git a/utils/__pycache__/record.cpython-310.pyc b/utils/__pycache__/record.cpython-310.pyc
-index 288c98e..7cae435 100644
-Binary files a/utils/__pycache__/record.cpython-310.pyc and b/utils/__pycache__/record.cpython-310.pyc differ
-diff --git a/utils/parameters.py b/utils/parameters.py
-index a113c69..f94d412 100644
---- a/utils/parameters.py
-+++ b/utils/parameters.py
-@@ -1,4 +1,32 @@
--import argparse
-+import argparse, yaml
-+from copy import deepcopy
-+
-+
-+import argparse, yaml
-+from copy import deepcopy
-+
-+def load_yaml(path: str):
-+    with open(path, "r") as f:
-+        return yaml.load(f, Loader=yaml.FullLoader)
-+
-+def _deep_update(dst: dict, src: dict):
-+    # recursively update dst with src
-+    for k, v in src.items():
-+        if isinstance(v, dict) and isinstance(dst.get(k), dict):
-+            _deep_update(dst[k], v)
-+        else:
-+            dst[k] = v
-+
-+def merge_dicts(base: dict, over: dict) -> dict:
-+    out = deepcopy(base)
-+    _deep_update(out, over)
-+    return out
-+
-+def merge_cfgs(baseline_cfg: dict, ablation_cfg_path: str | None) -> dict:
-+    if not ablation_cfg_path:
-+        return deepcopy(baseline_cfg)
-+    ablation_cfg = load_yaml(ablation_cfg_path)
-+    return merge_dicts(baseline_cfg, ablation_cfg)
- 
- 
- def get_parser():
-@@ -154,9 +182,9 @@ def get_parser():
-     parser.add_argument('--local_rank', default=0, type=int)
-     parser.add_argument('--dist-url', default='env://',
-                         help='url used to set up distributed training')
--
--
--
-+    
-+    parser.add_argument('--ablation_cfg', type=str, default=None,
-+                        help='Optional YAML to override baseline config for ablation study.')
- 
-     return parser
- 
-diff --git a/utils/record.py b/utils/record.py
-index fc2d3ea..1cfc9fe 100644
---- a/utils/record.py
-+++ b/utils/record.py
-@@ -16,7 +16,7 @@ class Recorder(object):
-             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
-             if proj:
-                 import wandb
--                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_baseline')
-+                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_tmm_v1')
-                 wandb_dir = work_dir.rstrip("/")
-                 wandb.init(project=proj, name=run_name, dir=wandb_dir)
-                 self.wandb = wandb
-@@ -27,12 +27,13 @@ class Recorder(object):
-         # --- end wandb ---
- 
-         if self.wandb is not None:
-+            pass
-             # make epochs the x-axis for eval metrics
--            self.wandb.define_metric("epoch")
--            self.wandb.define_metric("dev/*", step_metric="epoch")
--            self.wandb.define_metric("test/*", step_metric="epoch")
--            self.wandb.define_metric("train/*", step_metric="step")
--            self.wandb.define_metric("train_epoch/*", step_metric="epoch")
-+            # self.wandb.define_metric("epoch")
-+            # self.wandb.define_metric("dev/*", step_metric="epoch")
-+            # self.wandb.define_metric("test/*", step_metric="epoch")
-+            # self.wandb.define_metric("train/*", step_metric="step")
-+            # self.wandb.define_metric("train_epoch/*", step_metric="epoch")
- 
-     def log_metrics(self, metrics: dict, step=None):
-         if self.wandb is not None:
-
-[wandb] initialized project=tmmNet name=resnet18_tmm_v1
-[0]
-Loading model
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False, enable_tmm=True, tmm_location=post_bilstm, enable_motion=True
-learning rate conv2d=0.0001
-learning rate conv1d=0.0001
-learning rate temporal_model=0.0001
-learning rate classifier=0.0001
-learning rate motion_encoder=0.0001
-learning rate tmm=0.0001
-Loading model finished.
-Loading Dataprocessing
-train 5671
-Apply training transform.
-
-train 5671
-Apply testing transform.
-
-dev 540
-Apply testing transform.
-
-test 629
-Apply testing transform.
-
-Loading Dataprocessing finished.
-[ Mon Oct 20 23:14:12 2025 ] Parameters:
-{'work_dir': './resnet18_tmm_v1_log/', 'config': './configs/baseline.yaml', 'random_fix': True, 'device': 0, 'phase': 'train', 'save_interval': 10, 'random_seed': 0, 'eval_interval': 1, 'print_log': True, 'log_interval': 10000, 'evaluate_tool': 'python', 'feeder': 'dataset.dataloader_video.BaseFeeder', 'dataset': 'phoenix2014', 'dataset_info': {'dataset_root': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'dict_path': './preprocess/phoenix2014/gloss_dict.npy', 'evaluation_dir': './evaluation/slr_eval', 'evaluation_prefix': 'phoenix2014-groundtruth'}, 'num_worker': 4, 'feeder_args': {'mode': 'test', 'datatype': 'video', 'num_gloss': -1, 'drop_ratio': 1.0, 'frame_interval': 1, 'image_scale': 1.0, 'input_size': 224, 'prefix': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'transform_mode': False}, 'model': 'slr_network.SLRModel', 'model_args': {'num_classes': 1296, 'c2d_type': 'resnet18', 'conv_type': 2, 'use_bn': 1, 'share_classifier': True, 'weight_norm': True, 'use_graph': False, 'enable_tmm': True, 'tmm_location': 'post_bilstm', 'tmm_alpha': 0.2, 'enable_motion': True}, 'load_weights': False, 'load_checkpoints': False, 'decode_mode': 'beam', 'ignore_weights': [], 'batch_size': 4, 'test_batch_size': 4, 'loss_weights': {'SeqCTC': 1.0, 'ConvCTC': 1.0, 'Dist': 25.0}, 'optimizer_args': {'optimizer': 'Adam', 'learning_rate': {}, 'step': [20, 30, 35], 'learning_ratio': 1, 'scheduler': 'ScheaL', 'weight_decay': 0.0001, 'start_epoch': 0, 'num_epoch': 80, 'nesterov': False}, 'num_epoch': 80, 'world_size': 1, 'local_rank': 0, 'dist_url': 'env://', 'ablation_cfg': 'configs/ablation_tmm.yaml'}
-
-  0%|          | 0/1417 [00:00<?, ?it/s]  0%|          | 0/1417 [00:41<?, ?it/s]
-Traceback (most recent call last):
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 349, in <module>
-    processor.start()
-  File "/home/nirmal/SlowFast/ZtmmNet/main.py", line 73, in start
-    seq_train(self.data_loader['train'], self.model, self.optimizer,
-  File "/home/nirmal/SlowFast/ZtmmNet/seq_scripts.py", line 40, in seq_train
-    ret_dict = model(vid, vid_lgt, label=label, label_lgt=label_lgt)
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/nirmal/SlowFast/ZtmmNet/slr_network.py", line 182, in forward
-    m_aligned = self._align_motion_to_feat(m_raw, lgt, T)
-NameError: name 'T' is not defined
-[1;34mwandb[0m: 
-[1;34mwandb[0m: 🚀 View run [33mresnet18_tmm_v1[0m at: [34mhttps://wandb.ai/adhikareen-inha-university/tmmNet/runs/ylnp7f4p[0m
-wandb: Currently logged in as: adhikareen (adhikareen-inha-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.21.1
-wandb: Run data is saved locally in ./resnet18_tmm_v1_log/wandb/run-20251020_231529-ewn8i9vr
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run resnet18_tmm_v1
-wandb: ⭐️ View project at https://wandb.ai/adhikareen-inha-university/tmmNet
-wandb: 🚀 View run at https://wandb.ai/adhikareen-inha-university/tmmNet/runs/ewn8i9vr
-/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
-  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
-Working tree is dirty. Patch:
-diff --git a/__pycache__/slr_network.cpython-310.pyc b/__pycache__/slr_network.cpython-310.pyc
-index b21b048..0ea5e57 100644
-Binary files a/__pycache__/slr_network.cpython-310.pyc and b/__pycache__/slr_network.cpython-310.pyc differ
-diff --git a/configs/baseline.yaml b/configs/baseline.yaml
-index b916432..46e7e1f 100644
---- a/configs/baseline.yaml
-+++ b/configs/baseline.yaml
-@@ -4,13 +4,13 @@ dataset: phoenix2014
- #CSL-Daily
- # dataset: phoenix14-si5
- 
--work_dir: ./resent18_baseline/
-+work_dir: ./resnet18_tmm_v1_log/
- batch_size: 4
- random_seed: 0 
- test_batch_size: 4
- num_worker: 4
- device: 0
--log_interval: 100
-+log_interval: 10000
- eval_interval: 1
- save_interval: 10
-  
-diff --git a/configs/phoenix2014.yaml b/configs/phoenix2014.yaml
-index 66fb70c..910dcb1 100644
---- a/configs/phoenix2014.yaml
-+++ b/configs/phoenix2014.yaml
-@@ -1,7 +1,8 @@
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner_original
- # deblur_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner
--dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+# dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+dataset_root: /nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner # RVRT delburred dataset
- # dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner 
-diff --git a/main.py b/main.py
-index a821095..f812393 100644
---- a/main.py
-+++ b/main.py
-@@ -31,6 +31,11 @@ class Processor():
-         shutil.copy2('./modules/tconv.py', self.arg.work_dir)
-         shutil.copy2('./modules/resnet.py', self.arg.work_dir)
-         shutil.copy2('./modules/gcn_lib/temgraph.py', self.arg.work_dir)
-+        if getattr(self.arg, "ablation_cfg", None):
-+            try:
-+                shutil.copy2(self.arg.ablation_cfg, self.arg.work_dir)
-+            except Exception:
-+                pass
-         torch.backends.cudnn.benchmark = True
-         if type(self.arg.device) is not int:
-             init_distributed_mode(self.arg)
-@@ -281,24 +286,64 @@ def import_class(name):
- 
- 
- if __name__ == '__main__':
--    sparser = utils.get_parser()
--    p = sparser.parse_args()
--    if p.config is not None:
--        with open(p.config, 'r') as f:
--            try:
--                default_arg = yaml.load(f, Loader=yaml.FullLoader)
--            except AttributeError:
--                default_arg = yaml.load(f)
--        key = vars(p).keys()
--        for k in default_arg.keys():
--            if k not in key:
--                print('WRONG ARG: {}'.format(k))
--                assert (k in key)
--        sparser.set_defaults(**default_arg)
--    args = sparser.parse_args()
-+    # sparser = utils.get_parser()
-+    # p = sparser.parse_args()
-+    # if p.config is not None:
-+    #     with open(p.config, 'r') as f:
-+    #         try:
-+    #             default_arg = yaml.load(f, Loader=yaml.FullLoader)
-+    #         except AttributeError:
-+    #             default_arg = yaml.load(f)
-+    #     key = vars(p).keys()
-+    #     for k in default_arg.keys():
-+    #         if k not in key:
-+    #             print('WRONG ARG: {}'.format(k))
-+    #             assert (k in key)
-+    #     sparser.set_defaults(**default_arg)
-+    # args = sparser.parse_args()
-+    # with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-+    #     args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+    # processor = Processor(args)
-+    # utils.pack_code("./", args.work_dir)
-+    # processor.start()
-+ 
-+    from argparse import Namespace
-+    from utils.parameters import load_yaml, merge_cfgs, get_parser
-+
-+    # 1) Build parser (must include --config and --ablation_cfg)
-+    parser = get_parser()
-+    # First parse: just to read which files to load
-+    cmd = parser.parse_args()
-+
-+    # 2) Seed defaults with baseline.yaml if provided
-+    if cmd.config is not None:
-+        base_cfg = load_yaml(cmd.config)  # dict from baseline.yaml
-+        parser.set_defaults(**base_cfg)
-+    else:
-+        base_cfg = {}
-+
-+    # 3) Merge ablation.yaml on top (if provided), then set as defaults
-+    #    This ensures ablation overrides baseline, but CLI still wins.
-+    if getattr(cmd, "ablation_cfg", None):
-+        merged = merge_cfgs(base_cfg, cmd.ablation_cfg)  # dict
-+        parser.set_defaults(**merged)
-+
-+    # 4) Re-parse with new defaults so CLI flags remain highest precedence
-+    args = parser.parse_args()
-+
-+    # 5) Load dataset_info (unchanged)
-     with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-         args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+
-+    # 6) Start processor
-     processor = Processor(args)
-+
-+    # 7) Optional: archive configs for reproducibility
-     utils.pack_code("./", args.work_dir)
-+    # copy the *actual* config files used
-+    if cmd.config:
-+        shutil.copy2(cmd.config, os.path.join(args.work_dir, os.path.basename(cmd.config)))
-+    if getattr(cmd, "ablation_cfg", None):
-+        shutil.copy2(cmd.ablation_cfg, os.path.join(args.work_dir, os.path.basename(cmd.ablation_cfg)))
-+
-     processor.start()
-- 
-diff --git a/main.sh b/main.sh
-index b4d44be..8d5f33f 100644
---- a/main.sh
-+++ b/main.sh
-@@ -1 +1 @@
--python main.py 2>&1 | tee -a resent18_baseline_log.txt
-\ No newline at end of file
-+python main.py --ablation_cfg configs/ablation_tmm.yaml 2>&1 | tee -a resnet18_tmm_v1_log.txt
-\ No newline at end of file
-diff --git a/seq_scripts.py b/seq_scripts.py
-index 05f7807..b831ed4 100644
---- a/seq_scripts.py
-+++ b/seq_scripts.py
-@@ -57,6 +57,19 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
-         loss_value.append(loss.item())
-         step = global_step_base + batch_idx
-         if batch_idx % recoder.log_interval == 0 and is_main_process():
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                # g: (T', B, 1) or (T', B, d). Flatten safely.
-+                gm = g.float().mean().item()
-+                gs = g.float().std().item()
-+                g50 = (g > 0.5).float().mean().item()
-+                recoder.log_metrics({
-+                    "epoch": epoch_idx,
-+                    "train/tmm_gate_mean": float(gm),
-+                    "train/tmm_gate_std": float(gs),
-+                    "train/tmm_gate_frac>0.5": float(g50),
-+                }, step=step)
-+
-             # recoder.print_log(
-             #     '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
-             #         .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
-@@ -90,7 +103,13 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     model.eval()
-     results=defaultdict(dict)
- 
--    for batch_idx, data in enumerate(tqdm(loader)):
-+    gate_sum = 0.0
-+    gate_sqsum = 0.0
-+    gate_cnt = 0
-+    gate_above = 0.0
-+
-+
-+    for batch_idx, data in enumerate(tqdm(loader, disable=not is_main_process())):
-         recoder.record_timer("device")
-         vid = device.data_to_device(data[0])
-         vid_lgt = device.data_to_device(data[1])
-@@ -100,6 +119,18 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-         gloss = [d['label'] for d in data[-1]]
-         with torch.no_grad():
-             ret_dict = model(vid, vid_lgt, label=label, label_lgt=label_lgt)
-+
-+
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                g = g.float()
-+                gate_sum   += g.sum().item()
-+                gate_sqsum += (g * g).sum().item()
-+                gate_cnt   += g.numel()
-+                gate_above += (g > 0.5).float().sum().item()
-+
-+
-+
-             for inf, conv_sents, recognized_sents, gl in zip(info, ret_dict['conv_sents'], ret_dict['recognized_sents'], gloss):
-                 results[inf]['conv_sents'] = conv_sents
-                 results[inf]['recognized_sents'] = recognized_sents
-@@ -119,6 +150,15 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     recoder.print_log('\tEpoch: {} {} done. LSTM wer: {:.4f}  ins:{:.4f}, del:{:.4f}'.format(
-         epoch, mode, wer_results['wer'], wer_results['ins'], wer_results['del']), f"{work_dir}/{mode}.txt")
-     
-+    if gate_cnt > 0:
-+        gate_mean = gate_sum / gate_cnt
-+        gate_var  = max(gate_sqsum / gate_cnt - gate_mean * gate_mean, 0.0)
-+        gate_std  = gate_var ** 0.5
-+        gate_frac = gate_above / gate_cnt
-+    else:
-+        gate_mean = gate_std = gate_frac = float('nan')
-+
-+    
-     # wandb: DEV/TEST curves vs epoch
-     if is_main_process():
-         metrics = {
-@@ -129,7 +169,17 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-             f"{mode}/INS": float(reg_per['ins']),
-             f"{mode}/DEL": float(reg_per['del']),
-         }
--        recoder.log_metrics(metrics)
-+
-+        # add TMM stats if present
-+        if gate_cnt > 0:
-+            metrics.update({
-+                f"{mode}/tmm_gate_mean": float(gate_mean),
-+                f"{mode}/tmm_gate_std": float(gate_std),
-+                f"{mode}/tmm_gate_frac>0.5": float(gate_frac),
-+            })
-+
-+            
-+        recoder.log_metrics(metrics, step=epoch)
- 
-     return {"wer":reg_per['wer'], "ins":reg_per['ins'], 'del':reg_per['del']}
-  
-diff --git a/slr_network.py b/slr_network.py
-index d41837c..9fedac1 100644
---- a/slr_network.py
-+++ b/slr_network.py
-@@ -11,6 +11,12 @@ from modules.criterions import SeqKD
- from modules import BiLSTMLayer, TemporalConv
- import modules.resnet as resnet
- 
-+
-+####################################
-+from modules.tmm import MotionDiffEncoder, TemporalMotionMix
-+####################################
-+
-+
- class Identity(nn.Module):
-     def __init__(self):
-         super(Identity, self).__init__()
-@@ -34,7 +40,12 @@ class SLRModel(nn.Module):
-     def __init__(
-             self, num_classes, c2d_type, conv_type, use_bn=False,
-             hidden_size=1024, gloss_dict=None, loss_weights=None,
--            weight_norm=True, share_classifier=True, use_graph=False
-+            weight_norm=True, share_classifier=True, use_graph=False,
-+            # NEW for TMM
-+            enable_tmm=False,
-+            tmm_location="post_bilstm",
-+            tmm_alpha=0.2,
-+            enable_motion=True,
-     ):
-         super(SLRModel, self).__init__()
-         print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}")
-@@ -63,6 +74,41 @@ class SLRModel(nn.Module):
-         if share_classifier:
-             self.conv1d.fc = self.classifier
- 
-+        ############################################
-+        self.enable_tmm = enable_tmm
-+        self.tmm_location = tmm_location
-+        self.enable_motion = enable_motion
-+
-+        if self.enable_tmm:
-+            self.motion_encoder = MotionDiffEncoder(in_ch=3, feat_dim=hidden_size) if self.enable_motion else None
-+            self.tmm = TemporalMotionMix(d=hidden_size, alpha=tmm_alpha)
-+        else:
-+            self.motion_encoder = None
-+            self.tmm = None
-+
-+        print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}, "
-+                f"enable_tmm={self.enable_tmm}, tmm_location={self.tmm_location}, enable_motion={self.enable_motion}")
-+
-+        ############################################
-+
-+
-+    ################################################
-+    def _align_motion_to_feat(self, motion_B_T_D, feat_len, total_T):
-+        """
-+        motion_B_T_D: (B, T_raw, D)
-+        feat_len: (B,) after TCN (all equal in this repo)
-+        total_T: int (raw T)
-+        Returns (T’, B, D) aligned to sequence feature length
-+        """
-+        B, T_raw, D = motion_B_T_D.shape
-+        T_new = int(feat_len[0].item())
-+        # simple uniform sampling
-+        idx = torch.linspace(0, T_raw-1, steps=T_new).round().long().to(motion_B_T_D.device)
-+        m = motion_B_T_D[:, idx]                    # (B, T’, D)
-+        m = m.permute(1, 0, 2).contiguous()         # (T’, B, D)
-+        return m
-+    ################################################
-+
-     def backward_hook(self, module, grad_input, grad_output):
-         for g in grad_input:
-             g[g != g] = 0
-@@ -82,28 +128,90 @@ class SLRModel(nn.Module):
-         if len(x.shape) == 5:
-             # videos
-             batch, temp, channel, height, width = x.shape
--            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct
-+            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct # (B, 512, T) -> (B, 512, T)
-+            ############################################
-+            # prepare motion if needed
-+            if self.enable_tmm and self.enable_motion:
-+                # MotionDiffEncoder expects (B, T, C, H, W)
-+                with torch.no_grad(): # motion is a cue; you can also learn end-to-end by removing no_grad
-+                    m_raw = self.motion_encoder(x) # (B, T, hidden_size)
-+            else:
-+                m_raw = None
-+            ############################################
-         else:
-+            # features path (already (B, 512, T))
-             framewise = x
-+            m_raw = None # cannot compute motion without raw frames
-+
-+
-+        # TemporalConv
-         conv1d_outputs = self.conv1d(framewise, len_x)
-+
-+        ############################################
-         # x: T, B, C
--        x = conv1d_outputs['visual_feat']
--        lgt = conv1d_outputs['feat_len'].cpu()
--        tm_outputs = self.temporal_model(x, lgt)
--        outputs = self.classifier(tm_outputs['predictions'])
-+        # x = conv1d_outputs['visual_feat']
-+        z_tcn = conv1d_outputs['visual_feat'] # (T', B, H)
-+        ############################################
-+
-+        
-+        lgt = conv1d_outputs['feat_len'].cpu() # (B,)
-+
-+        ############################################
-+        # ------- TMM location: pre_bilstm -------
-+        if self.enable_tmm and self.tmm_location == "pre_bilstm":
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
-+            else:
-+                # fallback: zero motion
-+                m_aligned = torch.zeros_like(z_tcn)
-+            z_clean, g = self.tmm(z_tcn, m_aligned) # (T', B, H) , (T', B, 1)
-+            z_for_lstm = z_clean
-+        else:
-+            z_for_lstm = z_tcn
-+
-+        # ------------ BiLSTM ------------
-+        # tm_outputs = self.temporal_model(x, lgt)
-+        tm_outputs = self.temporal_model(z_for_lstm, lgt)
-+        z_seq = tm_outputs['predictions']           # (T’, B, H)
-+
-+
-+        ############################################
-+        # ---- TMM location: post_bilstm ----
-+        if self.enable_tmm and self.tmm_location == 'post_bilstm':
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
-+            else:
-+                m_aligned = torch.zeros_like(z_seq)
-+            z_clean, g = self.tmm(z_seq, m_aligned)
-+            z_out = z_clean
-+        else:
-+            z_out = z_seq
-+
-+        # ---- Classifiers ----
-+        seq_logits = self.classifier(z_out)                     # (T’, B, C)
-+        conv_logits = conv1d_outputs['conv_logits']             # (T’, B, C)
-+
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+
-+
-         pred = None if self.training \
--            else self.decoder.decode(outputs, lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(seq_logits, lgt, batch_first=False, probs=False)
-         conv_pred = None if self.training \
--            else self.decoder.decode(conv1d_outputs['conv_logits'], lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(conv_logits, lgt, batch_first=False, probs=False)
-+        
-+
-         return {
-             "framewise_features": framewise,
--            "visual_features": x,
--            "temproal_features": tm_outputs['predictions'],
-+            "visual_features": z_tcn,
-+            "temproal_features": z_seq,
-             "feat_len": lgt,
--            "conv_logits": conv1d_outputs['conv_logits'],
--            "sequence_logits": outputs,
-+            "conv_logits": conv_logits,
-+            "sequence_logits": seq_logits,
-             "conv_sents": conv_pred,
-             "recognized_sents": pred,
-+            # OPTIONAL: expose gate for diagnostics
-+            "tmm_gate": g if (self.enable_tmm) else None,            
-         }
- 
-     def criterion_calculation(self, ret_dict, label, label_lgt):
-diff --git a/utils/__pycache__/parameters.cpython-310.pyc b/utils/__pycache__/parameters.cpython-310.pyc
-index 9434124..54dd39c 100644
-Binary files a/utils/__pycache__/parameters.cpython-310.pyc and b/utils/__pycache__/parameters.cpython-310.pyc differ
-diff --git a/utils/__pycache__/record.cpython-310.pyc b/utils/__pycache__/record.cpython-310.pyc
-index 288c98e..7cae435 100644
-Binary files a/utils/__pycache__/record.cpython-310.pyc and b/utils/__pycache__/record.cpython-310.pyc differ
-diff --git a/utils/parameters.py b/utils/parameters.py
-index a113c69..f94d412 100644
---- a/utils/parameters.py
-+++ b/utils/parameters.py
-@@ -1,4 +1,32 @@
--import argparse
-+import argparse, yaml
-+from copy import deepcopy
-+
-+
-+import argparse, yaml
-+from copy import deepcopy
-+
-+def load_yaml(path: str):
-+    with open(path, "r") as f:
-+        return yaml.load(f, Loader=yaml.FullLoader)
-+
-+def _deep_update(dst: dict, src: dict):
-+    # recursively update dst with src
-+    for k, v in src.items():
-+        if isinstance(v, dict) and isinstance(dst.get(k), dict):
-+            _deep_update(dst[k], v)
-+        else:
-+            dst[k] = v
-+
-+def merge_dicts(base: dict, over: dict) -> dict:
-+    out = deepcopy(base)
-+    _deep_update(out, over)
-+    return out
-+
-+def merge_cfgs(baseline_cfg: dict, ablation_cfg_path: str | None) -> dict:
-+    if not ablation_cfg_path:
-+        return deepcopy(baseline_cfg)
-+    ablation_cfg = load_yaml(ablation_cfg_path)
-+    return merge_dicts(baseline_cfg, ablation_cfg)
- 
- 
- def get_parser():
-@@ -154,9 +182,9 @@ def get_parser():
-     parser.add_argument('--local_rank', default=0, type=int)
-     parser.add_argument('--dist-url', default='env://',
-                         help='url used to set up distributed training')
--
--
--
-+    
-+    parser.add_argument('--ablation_cfg', type=str, default=None,
-+                        help='Optional YAML to override baseline config for ablation study.')
- 
-     return parser
- 
-diff --git a/utils/record.py b/utils/record.py
-index fc2d3ea..1cfc9fe 100644
---- a/utils/record.py
-+++ b/utils/record.py
-@@ -16,7 +16,7 @@ class Recorder(object):
-             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
-             if proj:
-                 import wandb
--                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_baseline')
-+                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_tmm_v1')
-                 wandb_dir = work_dir.rstrip("/")
-                 wandb.init(project=proj, name=run_name, dir=wandb_dir)
-                 self.wandb = wandb
-@@ -27,12 +27,13 @@ class Recorder(object):
-         # --- end wandb ---
- 
-         if self.wandb is not None:
-+            pass
-             # make epochs the x-axis for eval metrics
--            self.wandb.define_metric("epoch")
--            self.wandb.define_metric("dev/*", step_metric="epoch")
--            self.wandb.define_metric("test/*", step_metric="epoch")
--            self.wandb.define_metric("train/*", step_metric="step")
--            self.wandb.define_metric("train_epoch/*", step_metric="epoch")
-+            # self.wandb.define_metric("epoch")
-+            # self.wandb.define_metric("dev/*", step_metric="epoch")
-+            # self.wandb.define_metric("test/*", step_metric="epoch")
-+            # self.wandb.define_metric("train/*", step_metric="step")
-+            # self.wandb.define_metric("train_epoch/*", step_metric="epoch")
- 
-     def log_metrics(self, metrics: dict, step=None):
-         if self.wandb is not None:
-
-[wandb] initialized project=tmmNet name=resnet18_tmm_v1
-[0]
-Loading model
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False, enable_tmm=True, tmm_location=post_bilstm, enable_motion=True
-learning rate conv2d=0.0001
-learning rate conv1d=0.0001
-learning rate temporal_model=0.0001
-learning rate classifier=0.0001
-learning rate motion_encoder=0.0001
-learning rate tmm=0.0001
-Loading model finished.
-Loading Dataprocessing
-train 5671
-Apply training transform.
-
-train 5671
-Apply testing transform.
-
-dev 540
-Apply testing transform.
-
-test 629
-Apply testing transform.
-
-Loading Dataprocessing finished.
-[ Mon Oct 20 23:15:32 2025 ] Parameters:
-{'work_dir': './resnet18_tmm_v1_log/', 'config': './configs/baseline.yaml', 'random_fix': True, 'device': 0, 'phase': 'train', 'save_interval': 10, 'random_seed': 0, 'eval_interval': 1, 'print_log': True, 'log_interval': 10000, 'evaluate_tool': 'python', 'feeder': 'dataset.dataloader_video.BaseFeeder', 'dataset': 'phoenix2014', 'dataset_info': {'dataset_root': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'dict_path': './preprocess/phoenix2014/gloss_dict.npy', 'evaluation_dir': './evaluation/slr_eval', 'evaluation_prefix': 'phoenix2014-groundtruth'}, 'num_worker': 4, 'feeder_args': {'mode': 'test', 'datatype': 'video', 'num_gloss': -1, 'drop_ratio': 1.0, 'frame_interval': 1, 'image_scale': 1.0, 'input_size': 224, 'prefix': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'transform_mode': False}, 'model': 'slr_network.SLRModel', 'model_args': {'num_classes': 1296, 'c2d_type': 'resnet18', 'conv_type': 2, 'use_bn': 1, 'share_classifier': True, 'weight_norm': True, 'use_graph': False, 'enable_tmm': True, 'tmm_location': 'post_bilstm', 'tmm_alpha': 0.2, 'enable_motion': True}, 'load_weights': False, 'load_checkpoints': False, 'decode_mode': 'beam', 'ignore_weights': [], 'batch_size': 4, 'test_batch_size': 4, 'loss_weights': {'SeqCTC': 1.0, 'ConvCTC': 1.0, 'Dist': 25.0}, 'optimizer_args': {'optimizer': 'Adam', 'learning_rate': {}, 'step': [20, 30, 35], 'learning_ratio': 1, 'scheduler': 'ScheaL', 'weight_decay': 0.0001, 'start_epoch': 0, 'num_epoch': 80, 'nesterov': False}, 'num_epoch': 80, 'world_size': 1, 'local_rank': 0, 'dist_url': 'env://', 'ablation_cfg': 'configs/ablation_tmm.yaml'}
-
-  0%|          | 0/1417 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/1417 [00:08<?, ?it/s]Epoch 0:   0%|          | 0/1417 [00:08<?, ?it/s, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 1/1417 [00:08<3:18:18,  8.40s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 2/1417 [00:08<1:29:31,  3.80s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 3/1417 [00:09<51:44,  2.20s/it, loss=577.7476, lr=0.000100]  Epoch 0:   0%|          | 4/1417 [00:09<34:06,  1.45s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 5/1417 [00:11<34:59,  1.49s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 6/1417 [00:11<25:13,  1.07s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 7/1417 [00:11<19:30,  1.20it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 8/1417 [00:11<15:02,  1.56it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 9/1417 [00:33<2:49:27,  7.22s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 10/1417 [00:34<2:02:12,  5.21s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 11/1417 [00:35<1:31:12,  3.89s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 12/1417 [00:35<1:05:45,  2.81s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 13/1417 [00:54<3:01:33,  7.76s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 14/1417 [00:55<2:08:45,  5.51s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 15/1417 [00:55<1:31:32,  3.92s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 16/1417 [00:55<1:06:19,  2.84s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 17/1417 [01:10<2:29:20,  6.40s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 18/1417 [01:14<2:12:22,  5.68s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 19/1417 [01:14<1:34:56,  4.07s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 20/1417 [01:14<1:08:26,  2.94s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 21/1417 [01:25<2:01:23,  5.22s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 22/1417 [01:31<2:05:26,  5.40s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 23/1417 [01:31<1:29:31,  3.85s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 24/1417 [01:35<1:30:07,  3.88s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 25/1417 [01:44<2:09:14,  5.57s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 26/1417 [01:52<2:21:48,  6.12s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 27/1417 [01:52<1:40:59,  4.36s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 28/1417 [01:53<1:16:24,  3.30s/it, loss=577.7476, lr=0.000100]wandb: Currently logged in as: adhikareen (adhikareen-inha-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.21.1
-wandb: Run data is saved locally in ./resnet18_tmm_v1_log/wandb/run-20251020_232012-cni6p3of
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run resnet18_tmm_v1
-wandb: ⭐️ View project at https://wandb.ai/adhikareen-inha-university/tmmNet
-wandb: 🚀 View run at https://wandb.ai/adhikareen-inha-university/tmmNet/runs/cni6p3of
-/home/nirmal/miniconda3/envs/slr_bf16/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
-  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
-Working tree is dirty. Patch:
-diff --git a/__pycache__/slr_network.cpython-310.pyc b/__pycache__/slr_network.cpython-310.pyc
-index b21b048..0ea5e57 100644
-Binary files a/__pycache__/slr_network.cpython-310.pyc and b/__pycache__/slr_network.cpython-310.pyc differ
-diff --git a/configs/baseline.yaml b/configs/baseline.yaml
-index b916432..46e7e1f 100644
---- a/configs/baseline.yaml
-+++ b/configs/baseline.yaml
-@@ -4,13 +4,13 @@ dataset: phoenix2014
- #CSL-Daily
- # dataset: phoenix14-si5
- 
--work_dir: ./resent18_baseline/
-+work_dir: ./resnet18_tmm_v1_log/
- batch_size: 4
- random_seed: 0 
- test_batch_size: 4
- num_worker: 4
- device: 0
--log_interval: 100
-+log_interval: 10000
- eval_interval: 1
- save_interval: 10
-  
-diff --git a/configs/phoenix2014.yaml b/configs/phoenix2014.yaml
-index 66fb70c..910dcb1 100644
---- a/configs/phoenix2014.yaml
-+++ b/configs/phoenix2014.yaml
-@@ -1,7 +1,8 @@
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner_original
- # deblur_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner
--dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+# dataset_root: /raid/xvoice/nirmal/phoenix-2014-multisigner_original
-+dataset_root: /nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner
- # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner # RVRT delburred dataset
- # dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
- # dataset_root: /raid/xvoice/data/phoenix2014/phoenix-2014-multisigner 
-diff --git a/main.py b/main.py
-index a821095..f812393 100644
---- a/main.py
-+++ b/main.py
-@@ -31,6 +31,11 @@ class Processor():
-         shutil.copy2('./modules/tconv.py', self.arg.work_dir)
-         shutil.copy2('./modules/resnet.py', self.arg.work_dir)
-         shutil.copy2('./modules/gcn_lib/temgraph.py', self.arg.work_dir)
-+        if getattr(self.arg, "ablation_cfg", None):
-+            try:
-+                shutil.copy2(self.arg.ablation_cfg, self.arg.work_dir)
-+            except Exception:
-+                pass
-         torch.backends.cudnn.benchmark = True
-         if type(self.arg.device) is not int:
-             init_distributed_mode(self.arg)
-@@ -281,24 +286,64 @@ def import_class(name):
- 
- 
- if __name__ == '__main__':
--    sparser = utils.get_parser()
--    p = sparser.parse_args()
--    if p.config is not None:
--        with open(p.config, 'r') as f:
--            try:
--                default_arg = yaml.load(f, Loader=yaml.FullLoader)
--            except AttributeError:
--                default_arg = yaml.load(f)
--        key = vars(p).keys()
--        for k in default_arg.keys():
--            if k not in key:
--                print('WRONG ARG: {}'.format(k))
--                assert (k in key)
--        sparser.set_defaults(**default_arg)
--    args = sparser.parse_args()
-+    # sparser = utils.get_parser()
-+    # p = sparser.parse_args()
-+    # if p.config is not None:
-+    #     with open(p.config, 'r') as f:
-+    #         try:
-+    #             default_arg = yaml.load(f, Loader=yaml.FullLoader)
-+    #         except AttributeError:
-+    #             default_arg = yaml.load(f)
-+    #     key = vars(p).keys()
-+    #     for k in default_arg.keys():
-+    #         if k not in key:
-+    #             print('WRONG ARG: {}'.format(k))
-+    #             assert (k in key)
-+    #     sparser.set_defaults(**default_arg)
-+    # args = sparser.parse_args()
-+    # with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-+    #     args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+    # processor = Processor(args)
-+    # utils.pack_code("./", args.work_dir)
-+    # processor.start()
-+ 
-+    from argparse import Namespace
-+    from utils.parameters import load_yaml, merge_cfgs, get_parser
-+
-+    # 1) Build parser (must include --config and --ablation_cfg)
-+    parser = get_parser()
-+    # First parse: just to read which files to load
-+    cmd = parser.parse_args()
-+
-+    # 2) Seed defaults with baseline.yaml if provided
-+    if cmd.config is not None:
-+        base_cfg = load_yaml(cmd.config)  # dict from baseline.yaml
-+        parser.set_defaults(**base_cfg)
-+    else:
-+        base_cfg = {}
-+
-+    # 3) Merge ablation.yaml on top (if provided), then set as defaults
-+    #    This ensures ablation overrides baseline, but CLI still wins.
-+    if getattr(cmd, "ablation_cfg", None):
-+        merged = merge_cfgs(base_cfg, cmd.ablation_cfg)  # dict
-+        parser.set_defaults(**merged)
-+
-+    # 4) Re-parse with new defaults so CLI flags remain highest precedence
-+    args = parser.parse_args()
-+
-+    # 5) Load dataset_info (unchanged)
-     with open(f"./configs/{args.dataset}.yaml", 'r') as f:
-         args.dataset_info = yaml.load(f, Loader=yaml.FullLoader)
-+
-+    # 6) Start processor
-     processor = Processor(args)
-+
-+    # 7) Optional: archive configs for reproducibility
-     utils.pack_code("./", args.work_dir)
-+    # copy the *actual* config files used
-+    if cmd.config:
-+        shutil.copy2(cmd.config, os.path.join(args.work_dir, os.path.basename(cmd.config)))
-+    if getattr(cmd, "ablation_cfg", None):
-+        shutil.copy2(cmd.ablation_cfg, os.path.join(args.work_dir, os.path.basename(cmd.ablation_cfg)))
-+
-     processor.start()
-- 
-diff --git a/main.sh b/main.sh
-index b4d44be..8d5f33f 100644
---- a/main.sh
-+++ b/main.sh
-@@ -1 +1 @@
--python main.py 2>&1 | tee -a resent18_baseline_log.txt
-\ No newline at end of file
-+python main.py --ablation_cfg configs/ablation_tmm.yaml 2>&1 | tee -a resnet18_tmm_v1_log.txt
-\ No newline at end of file
-diff --git a/seq_scripts.py b/seq_scripts.py
-index 05f7807..b831ed4 100644
---- a/seq_scripts.py
-+++ b/seq_scripts.py
-@@ -57,6 +57,19 @@ def seq_train(loader, model, optimizer, device, epoch_idx, recoder):
-         loss_value.append(loss.item())
-         step = global_step_base + batch_idx
-         if batch_idx % recoder.log_interval == 0 and is_main_process():
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                # g: (T', B, 1) or (T', B, d). Flatten safely.
-+                gm = g.float().mean().item()
-+                gs = g.float().std().item()
-+                g50 = (g > 0.5).float().mean().item()
-+                recoder.log_metrics({
-+                    "epoch": epoch_idx,
-+                    "train/tmm_gate_mean": float(gm),
-+                    "train/tmm_gate_std": float(gs),
-+                    "train/tmm_gate_frac>0.5": float(g50),
-+                }, step=step)
-+
-             # recoder.print_log(
-             #     '\tEpoch: {}, Batch({}/{}) done. Loss: {:.8f}  lr:{:.6f}'
-             #         .format(epoch_idx, batch_idx, len(loader), loss.item(), clr[0]))
-@@ -90,7 +103,13 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     model.eval()
-     results=defaultdict(dict)
- 
--    for batch_idx, data in enumerate(tqdm(loader)):
-+    gate_sum = 0.0
-+    gate_sqsum = 0.0
-+    gate_cnt = 0
-+    gate_above = 0.0
-+
-+
-+    for batch_idx, data in enumerate(tqdm(loader, disable=not is_main_process())):
-         recoder.record_timer("device")
-         vid = device.data_to_device(data[0])
-         vid_lgt = device.data_to_device(data[1])
-@@ -100,6 +119,18 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-         gloss = [d['label'] for d in data[-1]]
-         with torch.no_grad():
-             ret_dict = model(vid, vid_lgt, label=label, label_lgt=label_lgt)
-+
-+
-+            g = ret_dict.get("tmm_gate", None)
-+            if g is not None:
-+                g = g.float()
-+                gate_sum   += g.sum().item()
-+                gate_sqsum += (g * g).sum().item()
-+                gate_cnt   += g.numel()
-+                gate_above += (g > 0.5).float().sum().item()
-+
-+
-+
-             for inf, conv_sents, recognized_sents, gl in zip(info, ret_dict['conv_sents'], ret_dict['recognized_sents'], gloss):
-                 results[inf]['conv_sents'] = conv_sents
-                 results[inf]['recognized_sents'] = recognized_sents
-@@ -119,6 +150,15 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-     recoder.print_log('\tEpoch: {} {} done. LSTM wer: {:.4f}  ins:{:.4f}, del:{:.4f}'.format(
-         epoch, mode, wer_results['wer'], wer_results['ins'], wer_results['del']), f"{work_dir}/{mode}.txt")
-     
-+    if gate_cnt > 0:
-+        gate_mean = gate_sum / gate_cnt
-+        gate_var  = max(gate_sqsum / gate_cnt - gate_mean * gate_mean, 0.0)
-+        gate_std  = gate_var ** 0.5
-+        gate_frac = gate_above / gate_cnt
-+    else:
-+        gate_mean = gate_std = gate_frac = float('nan')
-+
-+    
-     # wandb: DEV/TEST curves vs epoch
-     if is_main_process():
-         metrics = {
-@@ -129,7 +169,17 @@ def seq_eval(cfg, loader, model, device, mode, epoch, work_dir, recoder, evaluat
-             f"{mode}/INS": float(reg_per['ins']),
-             f"{mode}/DEL": float(reg_per['del']),
-         }
--        recoder.log_metrics(metrics)
-+
-+        # add TMM stats if present
-+        if gate_cnt > 0:
-+            metrics.update({
-+                f"{mode}/tmm_gate_mean": float(gate_mean),
-+                f"{mode}/tmm_gate_std": float(gate_std),
-+                f"{mode}/tmm_gate_frac>0.5": float(gate_frac),
-+            })
-+
-+            
-+        recoder.log_metrics(metrics, step=epoch)
- 
-     return {"wer":reg_per['wer'], "ins":reg_per['ins'], 'del':reg_per['del']}
-  
-diff --git a/slr_network.py b/slr_network.py
-index d41837c..9fedac1 100644
---- a/slr_network.py
-+++ b/slr_network.py
-@@ -11,6 +11,12 @@ from modules.criterions import SeqKD
- from modules import BiLSTMLayer, TemporalConv
- import modules.resnet as resnet
- 
-+
-+####################################
-+from modules.tmm import MotionDiffEncoder, TemporalMotionMix
-+####################################
-+
-+
- class Identity(nn.Module):
-     def __init__(self):
-         super(Identity, self).__init__()
-@@ -34,7 +40,12 @@ class SLRModel(nn.Module):
-     def __init__(
-             self, num_classes, c2d_type, conv_type, use_bn=False,
-             hidden_size=1024, gloss_dict=None, loss_weights=None,
--            weight_norm=True, share_classifier=True, use_graph=False
-+            weight_norm=True, share_classifier=True, use_graph=False,
-+            # NEW for TMM
-+            enable_tmm=False,
-+            tmm_location="post_bilstm",
-+            tmm_alpha=0.2,
-+            enable_motion=True,
-     ):
-         super(SLRModel, self).__init__()
-         print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}")
-@@ -63,6 +74,41 @@ class SLRModel(nn.Module):
-         if share_classifier:
-             self.conv1d.fc = self.classifier
- 
-+        ############################################
-+        self.enable_tmm = enable_tmm
-+        self.tmm_location = tmm_location
-+        self.enable_motion = enable_motion
-+
-+        if self.enable_tmm:
-+            self.motion_encoder = MotionDiffEncoder(in_ch=3, feat_dim=hidden_size) if self.enable_motion else None
-+            self.tmm = TemporalMotionMix(d=hidden_size, alpha=tmm_alpha)
-+        else:
-+            self.motion_encoder = None
-+            self.tmm = None
-+
-+        print(f"SLRModel: conv2d={c2d_type}, conv1d={conv_type}, use_bn={use_bn}, use_graph={use_graph}, "
-+                f"enable_tmm={self.enable_tmm}, tmm_location={self.tmm_location}, enable_motion={self.enable_motion}")
-+
-+        ############################################
-+
-+
-+    ################################################
-+    def _align_motion_to_feat(self, motion_B_T_D, feat_len, total_T):
-+        """
-+        motion_B_T_D: (B, T_raw, D)
-+        feat_len: (B,) after TCN (all equal in this repo)
-+        total_T: int (raw T)
-+        Returns (T’, B, D) aligned to sequence feature length
-+        """
-+        B, T_raw, D = motion_B_T_D.shape
-+        T_new = int(feat_len[0].item())
-+        # simple uniform sampling
-+        idx = torch.linspace(0, T_raw-1, steps=T_new).round().long().to(motion_B_T_D.device)
-+        m = motion_B_T_D[:, idx]                    # (B, T’, D)
-+        m = m.permute(1, 0, 2).contiguous()         # (T’, B, D)
-+        return m
-+    ################################################
-+
-     def backward_hook(self, module, grad_input, grad_output):
-         for g in grad_input:
-             g[g != g] = 0
-@@ -82,28 +128,90 @@ class SLRModel(nn.Module):
-         if len(x.shape) == 5:
-             # videos
-             batch, temp, channel, height, width = x.shape
--            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct
-+            framewise = self.conv2d(x.permute(0,2,1,3,4)).view(batch, temp, -1).permute(0,2,1) # btc -> bct # (B, 512, T) -> (B, 512, T)
-+            ############################################
-+            # prepare motion if needed
-+            if self.enable_tmm and self.enable_motion:
-+                # MotionDiffEncoder expects (B, T, C, H, W)
-+                with torch.no_grad(): # motion is a cue; you can also learn end-to-end by removing no_grad
-+                    m_raw = self.motion_encoder(x) # (B, T, hidden_size)
-+            else:
-+                m_raw = None
-+            ############################################
-         else:
-+            # features path (already (B, 512, T))
-             framewise = x
-+            m_raw = None # cannot compute motion without raw frames
-+
-+
-+        # TemporalConv
-         conv1d_outputs = self.conv1d(framewise, len_x)
-+
-+        ############################################
-         # x: T, B, C
--        x = conv1d_outputs['visual_feat']
--        lgt = conv1d_outputs['feat_len'].cpu()
--        tm_outputs = self.temporal_model(x, lgt)
--        outputs = self.classifier(tm_outputs['predictions'])
-+        # x = conv1d_outputs['visual_feat']
-+        z_tcn = conv1d_outputs['visual_feat'] # (T', B, H)
-+        ############################################
-+
-+        
-+        lgt = conv1d_outputs['feat_len'].cpu() # (B,)
-+
-+        ############################################
-+        # ------- TMM location: pre_bilstm -------
-+        if self.enable_tmm and self.tmm_location == "pre_bilstm":
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
-+            else:
-+                # fallback: zero motion
-+                m_aligned = torch.zeros_like(z_tcn)
-+            z_clean, g = self.tmm(z_tcn, m_aligned) # (T', B, H) , (T', B, 1)
-+            z_for_lstm = z_clean
-+        else:
-+            z_for_lstm = z_tcn
-+
-+        # ------------ BiLSTM ------------
-+        # tm_outputs = self.temporal_model(x, lgt)
-+        tm_outputs = self.temporal_model(z_for_lstm, lgt)
-+        z_seq = tm_outputs['predictions']           # (T’, B, H)
-+
-+
-+        ############################################
-+        # ---- TMM location: post_bilstm ----
-+        if self.enable_tmm and self.tmm_location == 'post_bilstm':
-+            if m_raw is not None:
-+                m_aligned = self._align_motion_to_feat(m_raw, lgt, temp)
-+            else:
-+                m_aligned = torch.zeros_like(z_seq)
-+            z_clean, g = self.tmm(z_seq, m_aligned)
-+            z_out = z_clean
-+        else:
-+            z_out = z_seq
-+
-+        # ---- Classifiers ----
-+        seq_logits = self.classifier(z_out)                     # (T’, B, C)
-+        conv_logits = conv1d_outputs['conv_logits']             # (T’, B, C)
-+
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+        # outputs = self.classifier(tm_outputs['predictions'])
-+
-+
-         pred = None if self.training \
--            else self.decoder.decode(outputs, lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(seq_logits, lgt, batch_first=False, probs=False)
-         conv_pred = None if self.training \
--            else self.decoder.decode(conv1d_outputs['conv_logits'], lgt, batch_first=False, probs=False)
-+            else self.decoder.decode(conv_logits, lgt, batch_first=False, probs=False)
-+        
-+
-         return {
-             "framewise_features": framewise,
--            "visual_features": x,
--            "temproal_features": tm_outputs['predictions'],
-+            "visual_features": z_tcn,
-+            "temproal_features": z_seq,
-             "feat_len": lgt,
--            "conv_logits": conv1d_outputs['conv_logits'],
--            "sequence_logits": outputs,
-+            "conv_logits": conv_logits,
-+            "sequence_logits": seq_logits,
-             "conv_sents": conv_pred,
-             "recognized_sents": pred,
-+            # OPTIONAL: expose gate for diagnostics
-+            "tmm_gate": g if (self.enable_tmm) else None,            
-         }
- 
-     def criterion_calculation(self, ret_dict, label, label_lgt):
-diff --git a/utils/__pycache__/parameters.cpython-310.pyc b/utils/__pycache__/parameters.cpython-310.pyc
-index 9434124..54dd39c 100644
-Binary files a/utils/__pycache__/parameters.cpython-310.pyc and b/utils/__pycache__/parameters.cpython-310.pyc differ
-diff --git a/utils/__pycache__/record.cpython-310.pyc b/utils/__pycache__/record.cpython-310.pyc
-index 288c98e..7cae435 100644
-Binary files a/utils/__pycache__/record.cpython-310.pyc and b/utils/__pycache__/record.cpython-310.pyc differ
-diff --git a/utils/parameters.py b/utils/parameters.py
-index a113c69..f94d412 100644
---- a/utils/parameters.py
-+++ b/utils/parameters.py
-@@ -1,4 +1,32 @@
--import argparse
-+import argparse, yaml
-+from copy import deepcopy
-+
-+
-+import argparse, yaml
-+from copy import deepcopy
-+
-+def load_yaml(path: str):
-+    with open(path, "r") as f:
-+        return yaml.load(f, Loader=yaml.FullLoader)
-+
-+def _deep_update(dst: dict, src: dict):
-+    # recursively update dst with src
-+    for k, v in src.items():
-+        if isinstance(v, dict) and isinstance(dst.get(k), dict):
-+            _deep_update(dst[k], v)
-+        else:
-+            dst[k] = v
-+
-+def merge_dicts(base: dict, over: dict) -> dict:
-+    out = deepcopy(base)
-+    _deep_update(out, over)
-+    return out
-+
-+def merge_cfgs(baseline_cfg: dict, ablation_cfg_path: str | None) -> dict:
-+    if not ablation_cfg_path:
-+        return deepcopy(baseline_cfg)
-+    ablation_cfg = load_yaml(ablation_cfg_path)
-+    return merge_dicts(baseline_cfg, ablation_cfg)
- 
- 
- def get_parser():
-@@ -154,9 +182,9 @@ def get_parser():
-     parser.add_argument('--local_rank', default=0, type=int)
-     parser.add_argument('--dist-url', default='env://',
-                         help='url used to set up distributed training')
--
--
--
-+    
-+    parser.add_argument('--ablation_cfg', type=str, default=None,
-+                        help='Optional YAML to override baseline config for ablation study.')
- 
-     return parser
- 
-diff --git a/utils/record.py b/utils/record.py
-index fc2d3ea..1cfc9fe 100644
---- a/utils/record.py
-+++ b/utils/record.py
-@@ -16,7 +16,7 @@ class Recorder(object):
-             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
-             if proj:
-                 import wandb
--                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_baseline')
-+                run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_tmm_v1')
-                 wandb_dir = work_dir.rstrip("/")
-                 wandb.init(project=proj, name=run_name, dir=wandb_dir)
-                 self.wandb = wandb
-@@ -27,12 +27,13 @@ class Recorder(object):
-         # --- end wandb ---
- 
-         if self.wandb is not None:
-+            pass
-             # make epochs the x-axis for eval metrics
--            self.wandb.define_metric("epoch")
--            self.wandb.define_metric("dev/*", step_metric="epoch")
--            self.wandb.define_metric("test/*", step_metric="epoch")
--            self.wandb.define_metric("train/*", step_metric="step")
--            self.wandb.define_metric("train_epoch/*", step_metric="epoch")
-+            # self.wandb.define_metric("epoch")
-+            # self.wandb.define_metric("dev/*", step_metric="epoch")
-+            # self.wandb.define_metric("test/*", step_metric="epoch")
-+            # self.wandb.define_metric("train/*", step_metric="step")
-+            # self.wandb.define_metric("train_epoch/*", step_metric="epoch")
- 
-     def log_metrics(self, metrics: dict, step=None):
-         if self.wandb is not None:
-
-[wandb] initialized project=tmmNet name=resnet18_tmm_v1
-[0]
-Loading model
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False
-SLRModel: conv2d=resnet18, conv1d=2, use_bn=1, use_graph=False, enable_tmm=True, tmm_location=post_bilstm, enable_motion=True
-learning rate conv2d=0.0001
-learning rate conv1d=0.0001
-learning rate temporal_model=0.0001
-learning rate classifier=0.0001
-learning rate motion_encoder=0.0001
-learning rate tmm=0.0001
-Loading model finished.
-Loading Dataprocessing
-train 5671
-Apply training transform.
-
-train 5671
-Apply testing transform.
-
-dev 540
-Apply testing transform.
-
-test 629
-Apply testing transform.
-
-Loading Dataprocessing finished.
-[ Mon Oct 20 23:20:14 2025 ] Parameters:
-{'work_dir': './resnet18_tmm_v1_log/', 'config': './configs/baseline.yaml', 'random_fix': True, 'device': 0, 'phase': 'train', 'save_interval': 10, 'random_seed': 0, 'eval_interval': 1, 'print_log': True, 'log_interval': 10000, 'evaluate_tool': 'python', 'feeder': 'dataset.dataloader_video.BaseFeeder', 'dataset': 'phoenix2014', 'dataset_info': {'dataset_root': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'dict_path': './preprocess/phoenix2014/gloss_dict.npy', 'evaluation_dir': './evaluation/slr_eval', 'evaluation_prefix': 'phoenix2014-groundtruth'}, 'num_worker': 4, 'feeder_args': {'mode': 'test', 'datatype': 'video', 'num_gloss': -1, 'drop_ratio': 1.0, 'frame_interval': 1, 'image_scale': 1.0, 'input_size': 224, 'prefix': '/nas/Dataset/Phoenix/phoenix2014-release/phoenix-2014-multisigner', 'transform_mode': False}, 'model': 'slr_network.SLRModel', 'model_args': {'num_classes': 1296, 'c2d_type': 'resnet18', 'conv_type': 2, 'use_bn': 1, 'share_classifier': True, 'weight_norm': True, 'use_graph': False, 'enable_tmm': True, 'tmm_location': 'post_bilstm', 'tmm_alpha': 0.2, 'enable_motion': True}, 'load_weights': False, 'load_checkpoints': False, 'decode_mode': 'beam', 'ignore_weights': [], 'batch_size': 4, 'test_batch_size': 4, 'loss_weights': {'SeqCTC': 1.0, 'ConvCTC': 1.0, 'Dist': 25.0}, 'optimizer_args': {'optimizer': 'Adam', 'learning_rate': {}, 'step': [20, 30, 35], 'learning_ratio': 1, 'scheduler': 'ScheaL', 'weight_decay': 0.0001, 'start_epoch': 0, 'num_epoch': 80, 'nesterov': False}, 'num_epoch': 80, 'world_size': 1, 'local_rank': 0, 'dist_url': 'env://', 'ablation_cfg': 'configs/ablation_tmm.yaml'}
-
-  0%|          | 0/1417 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/1417 [00:08<?, ?it/s]Epoch 0:   0%|          | 0/1417 [00:08<?, ?it/s, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 1/1417 [00:08<3:09:20,  8.02s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 2/1417 [00:08<1:27:49,  3.72s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 3/1417 [00:09<50:48,  2.16s/it, loss=577.7476, lr=0.000100]  Epoch 0:   0%|          | 4/1417 [00:09<33:34,  1.43s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 5/1417 [00:10<35:00,  1.49s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 6/1417 [00:11<27:19,  1.16s/it, loss=577.7476, lr=0.000100]Epoch 0:   0%|          | 7/1417 [00:11<20:54,  1.12it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 8/1417 [00:12<15:59,  1.47it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 9/1417 [00:16<40:19,  1.72s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 10/1417 [00:16<29:54,  1.28s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 11/1417 [00:16<23:11,  1.01it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 12/1417 [00:16<18:27,  1.27it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 13/1417 [00:20<36:09,  1.55s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 14/1417 [00:20<27:21,  1.17s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 15/1417 [00:20<20:35,  1.13it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 16/1417 [00:21<16:46,  1.39it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|          | 17/1417 [00:23<30:44,  1.32s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 18/1417 [00:24<26:36,  1.14s/it, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 19/1417 [00:24<20:57,  1.11it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 20/1417 [00:25<16:43,  1.39it/s, loss=577.7476, lr=0.000100]Epoch 0:   1%|▏         | 21/1417 [00:27<25:48,  1.11s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 22/1417 [00:28<27:50,  1.20s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 23/1417 [00:29<24:48,  1.07s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 24/1417 [00:29<19:09,  1.21it/s, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 25/1417 [00:31<24:41,  1.06s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 26/1417 [00:33<33:51,  1.46s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 27/1417 [00:33<25:28,  1.10s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 28/1417 [00:34<19:43,  1.17it/s, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 29/1417 [00:37<37:06,  1.60s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 30/1417 [00:46<1:29:39,  3.88s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 31/1417 [00:46<1:04:30,  2.79s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 32/1417 [00:47<46:50,  2.03s/it, loss=577.7476, lr=0.000100]  Epoch 0:   2%|▏         | 33/1417 [00:59<1:55:45,  5.02s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 34/1417 [01:06<2:12:41,  5.76s/it, loss=577.7476, lr=0.000100]Epoch 0:   2%|▏         | 35/1417 [01:08<1:43:30,  4.49s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 36/1417 [01:08<1:14:20,  3.23s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 37/1417 [01:28<3:08:01,  8.18s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 38/1417 [01:30<2:28:48,  6.47s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 39/1417 [01:30<1:45:38,  4.60s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 40/1417 [01:31<1:15:49,  3.30s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 41/1417 [01:49<2:55:14,  7.64s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 42/1417 [01:50<2:13:58,  5.85s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 43/1417 [01:50<1:35:46,  4.18s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 44/1417 [01:51<1:08:55,  3.01s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 45/1417 [02:04<2:21:36,  6.19s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 46/1417 [02:10<2:19:46,  6.12s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 47/1417 [02:11<1:39:34,  4.36s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 48/1417 [02:11<1:11:32,  3.14s/it, loss=577.7476, lr=0.000100]Epoch 0:   3%|▎         | 49/1417 [02:25<2:25:02,  6.36s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▎         | 50/1417 [02:29<2:11:27,  5.77s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▎         | 51/1417 [02:29<1:34:02,  4.13s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▎         | 52/1417 [02:30<1:07:27,  2.97s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▎         | 53/1417 [02:48<2:55:20,  7.71s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 54/1417 [02:49<2:07:13,  5.60s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 55/1417 [02:49<1:30:38,  3.99s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 56/1417 [02:50<1:04:59,  2.87s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 57/1417 [03:06<2:34:43,  6.83s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 58/1417 [03:13<2:38:00,  6.98s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 59/1417 [03:13<1:52:23,  4.97s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 60/1417 [03:14<1:20:36,  3.56s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 61/1417 [03:22<1:54:26,  5.06s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 62/1417 [03:34<2:40:22,  7.10s/it, loss=577.7476, lr=0.000100]Epoch 0:   4%|▍         | 63/1417 [03:34<1:53:46,  5.04s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 64/1417 [03:34<1:21:03,  3.59s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 65/1417 [03:43<1:52:49,  5.01s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 66/1417 [03:56<2:48:34,  7.49s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 67/1417 [03:56<1:59:15,  5.30s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 68/1417 [03:56<1:25:00,  3.78s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 69/1417 [04:03<1:46:29,  4.74s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▍         | 70/1417 [04:15<2:30:34,  6.71s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▌         | 71/1417 [04:15<1:47:31,  4.79s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▌         | 72/1417 [04:15<1:17:24,  3.45s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▌         | 73/1417 [04:26<2:04:36,  5.56s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▌         | 74/1417 [04:29<1:49:30,  4.89s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▌         | 75/1417 [04:29<1:18:30,  3.51s/it, loss=577.7476, lr=0.000100]Epoch 0:   5%|▌         | 76/1417 [04:30<57:10,  2.56s/it, loss=577.7476, lr=0.000100]  Epoch 0:   5%|▌         | 77/1417 [04:54<3:22:40,  9.07s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 78/1417 [04:54<2:23:31,  6.43s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 79/1417 [04:55<1:42:38,  4.60s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 80/1417 [04:55<1:13:22,  3.29s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 81/1417 [05:18<3:26:05,  9.26s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 82/1417 [05:18<2:26:07,  6.57s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 83/1417 [05:19<1:43:48,  4.67s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 84/1417 [05:19<1:14:44,  3.36s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 85/1417 [05:32<2:19:52,  6.30s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 86/1417 [05:37<2:08:36,  5.80s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 87/1417 [05:37<1:31:19,  4.12s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▌         | 88/1417 [05:37<1:06:04,  2.98s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▋         | 89/1417 [05:50<2:07:26,  5.76s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▋         | 90/1417 [06:00<2:35:30,  7.03s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▋         | 91/1417 [06:00<1:50:03,  4.98s/it, loss=577.7476, lr=0.000100]Epoch 0:   6%|▋         | 92/1417 [06:00<1:18:59,  3.58s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 93/1417 [06:14<2:26:37,  6.64s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 94/1417 [06:15<1:49:11,  4.95s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 95/1417 [06:15<1:18:30,  3.56s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 96/1417 [06:16<58:54,  2.68s/it, loss=577.7476, lr=0.000100]  Epoch 0:   7%|▋         | 97/1417 [06:42<3:32:57,  9.68s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 98/1417 [06:42<2:30:46,  6.86s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 99/1417 [06:42<1:47:13,  4.88s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 100/1417 [06:43<1:16:48,  3.50s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 101/1417 [07:16<4:33:09, 12.45s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 102/1417 [07:16<3:12:55,  8.80s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 103/1417 [07:17<2:17:05,  6.26s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 104/1417 [07:17<1:37:18,  4.45s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 105/1417 [07:37<3:22:24,  9.26s/it, loss=577.7476, lr=0.000100]Epoch 0:   7%|▋         | 106/1417 [07:37<2:22:52,  6.54s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 107/1417 [07:38<1:42:08,  4.68s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 108/1417 [07:38<1:13:28,  3.37s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 109/1417 [08:06<3:52:42, 10.67s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 110/1417 [08:06<2:44:50,  7.57s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 111/1417 [08:06<1:56:45,  5.36s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 112/1417 [08:07<1:23:25,  3.84s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 113/1417 [08:26<3:03:19,  8.43s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 114/1417 [08:26<2:10:12,  6.00s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 115/1417 [08:26<1:32:45,  4.27s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 116/1417 [08:27<1:06:23,  3.06s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 117/1417 [08:50<3:17:50,  9.13s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 118/1417 [08:50<2:20:01,  6.47s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 119/1417 [08:50<1:39:39,  4.61s/it, loss=577.7476, lr=0.000100]Epoch 0:   8%|▊         | 120/1417 [08:51<1:11:24,  3.30s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▊         | 121/1417 [09:12<3:07:28,  8.68s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▊         | 122/1417 [09:12<2:13:08,  6.17s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▊         | 123/1417 [09:12<1:34:32,  4.38s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 124/1417 [09:13<1:07:47,  3.15s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 125/1417 [09:32<2:49:09,  7.86s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 126/1417 [09:32<2:00:26,  5.60s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 127/1417 [09:32<1:25:45,  3.99s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 128/1417 [09:32<1:02:07,  2.89s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 129/1417 [10:00<3:41:08, 10.30s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 130/1417 [10:00<2:36:21,  7.29s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 131/1417 [10:00<1:50:40,  5.16s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 132/1417 [10:01<1:19:10,  3.70s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 133/1417 [10:23<3:18:12,  9.26s/it, loss=577.7476, lr=0.000100]Epoch 0:   9%|▉         | 134/1417 [10:23<2:20:31,  6.57s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|▉         | 135/1417 [10:24<1:40:12,  4.69s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|▉         | 136/1417 [10:24<1:11:16,  3.34s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|▉         | 137/1417 [10:41<2:39:01,  7.45s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|▉         | 138/1417 [10:41<1:53:15,  5.31s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|▉         | 139/1417 [10:41<1:21:03,  3.81s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|▉         | 140/1417 [10:42<58:15,  2.74s/it, loss=577.7476, lr=0.000100]  Epoch 0:  10%|▉         | 141/1417 [11:02<2:48:54,  7.94s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 142/1417 [11:02<1:59:34,  5.63s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 143/1417 [11:02<1:25:34,  4.03s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 144/1417 [11:03<1:01:31,  2.90s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 145/1417 [11:24<2:57:40,  8.38s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 146/1417 [11:24<2:05:41,  5.93s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 147/1417 [11:24<1:29:33,  4.23s/it, loss=577.7476, lr=0.000100]Epoch 0:  10%|█         | 148/1417 [11:25<1:04:46,  3.06s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 149/1417 [11:41<2:31:51,  7.19s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 150/1417 [11:42<1:48:21,  5.13s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 151/1417 [11:42<1:17:25,  3.67s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 152/1417 [11:42<55:40,  2.64s/it, loss=577.7476, lr=0.000100]  Epoch 0:  11%|█         | 153/1417 [12:00<2:32:40,  7.25s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 154/1417 [12:00<1:48:49,  5.17s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 155/1417 [12:01<1:17:52,  3.70s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 156/1417 [12:01<56:35,  2.69s/it, loss=577.7476, lr=0.000100]  Epoch 0:  11%|█         | 157/1417 [12:19<2:31:13,  7.20s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 158/1417 [12:19<1:47:23,  5.12s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█         | 159/1417 [12:19<1:16:35,  3.65s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█▏        | 160/1417 [12:20<55:12,  2.64s/it, loss=577.7476, lr=0.000100]  Epoch 0:  11%|█▏        | 161/1417 [12:42<3:02:29,  8.72s/it, loss=577.7476, lr=0.000100]Epoch 0:  11%|█▏        | 162/1417 [12:43<2:09:12,  6.18s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 163/1417 [12:43<1:32:29,  4.43s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 164/1417 [12:43<1:06:44,  3.20s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 165/1417 [13:05<2:58:46,  8.57s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 166/1417 [13:05<2:06:24,  6.06s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 167/1417 [13:05<1:30:17,  4.33s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 168/1417 [13:05<1:04:15,  3.09s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 169/1417 [13:26<2:55:55,  8.46s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 170/1417 [13:27<2:05:07,  6.02s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 171/1417 [13:27<1:29:20,  4.30s/it, loss=577.7476, lr=0.000100]Epoch 0:  12%|█▏        | 172/1417 [13:27<1:04:11,  3.09s/it, loss=577.7476, lr=0.000100]

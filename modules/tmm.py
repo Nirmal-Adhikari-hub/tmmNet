@@ -44,32 +44,56 @@ class MotionDiffEncoder(nn.Module):
         return m
     
 
+# class TemporalMotionMix(nn.Module):
+#     """
+#     TMM gate per timestep using [z_t || m̃_t], and two light projections (s_t, r_t),
+#     then mix per eq 6-8
+#     """
+#     def __init__(self, d, alpha=0.2):
+#         super().__init__()
+#         self.g_fc = nn.Linear(2*d, 1) # gate from concat [z || m̃]
+#         self.s_fc = nn.Linear(d, d) # stroke projection
+#         self.r_fc = nn.Linear(d, d) # transition projection
+#         self.alpha = alpha
+
+
+#     def forward(self, z, m):
+#         """
+#         z: (B, T, d) context features from TCN or BiLSTM
+#         m: (B, T, d) motion embeddings aligned to z
+#         returns:
+#             z_clean: (T, B, d)
+#         """
+#         T, B, d = z.shape
+#         cat = torch.cat([z, m], dim=-1) # (T, B, 2d)
+#         g = torch.sigmoid(self.g_fc(cat)).view(T, B, 1) # (T, B, 1) gate eq 6
+
+#         s = F.relu(self.s_fc(z))  # (T, B, d) eq 7
+#         r = F.relu(self.r_fc(z))  # (T, B, d) eq 7
+
+#         z_clean = (1 - g)*s + g*r + self.alpha*(1 - g)*z   # (Eq. 8)
+#         return z_clean, g
+
+
 class TemporalMotionMix(nn.Module):
-    """
-    TMM gate per timestep using [z_t || m̃_t], and two light projections (s_t, r_t),
-    then mix per eq 6-8
-    """
     def __init__(self, d, alpha=0.2):
         super().__init__()
-        self.g_fc = nn.Linear(2*d, 1) # gate from concat [z || m̃]
-        self.s_fc = nn.Linear(d, d) # stroke projection
-        self.r_fc = nn.Linear(d, d) # transition projection
+        self.ln_z = nn.LayerNorm(d)
+        self.ln_m = nn.LayerNorm(d)
+        self.g_fc = nn.Linear(2*d, 1)
+        self.s_fc = nn.Linear(d, d)
+        self.r_fc = nn.Linear(d, d)
         self.alpha = alpha
-
+        nn.init.constant_(self.g_fc.bias, 0.0)  # keep neutral start
 
     def forward(self, z, m):
-        """
-        z: (B, T, d) context features from TCN or BiLSTM
-        m: (B, T, d) motion embeddings aligned to z
-        returns:
-            z_clean: (T, B, d)
-        """
-        T, B, d = z.shape
-        cat = torch.cat([z, m], dim=-1) # (T, B, 2d)
-        g = torch.sigmoid(self.g_fc(cat)).view(T, B, 1) # (T, B, 1) gate eq 6
-
-        s = F.relu(self.s_fc(z))  # (T, B, d) eq 7
-        r = F.relu(self.r_fc(z))  # (T, B, d) eq 7
-
-        z_clean = (1 - g)*s + g*r + self.alpha*(1 - g)*z   # (Eq. 8)
-        return z_clean, g
+        # z, m: (T, B, d)
+        z = self.ln_z(z)
+        m = self.ln_m(m)
+        cat = torch.cat([z, m], dim=-1)
+        g_pre = self.g_fc(cat)
+        g = torch.sigmoid(g_pre).view(z.size(0), z.size(1), 1)
+        s = F.relu(self.s_fc(z))
+        r = F.relu(self.r_fc(z))
+        z_clean = (1 - g)*s + g*r + self.alpha*(1 - g)*z
+        return z_clean, g, g_pre
