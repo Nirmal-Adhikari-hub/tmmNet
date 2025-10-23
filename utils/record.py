@@ -16,24 +16,20 @@ class Recorder(object):
             proj = os.getenv("WANDB_PROJECT", 'tmmNet')
             if proj:
                 import wandb
-                # --- MODIFIED: Securely get API key ---
-                # This explicitly checks for the WANDB_API_KEY environment variable.
-                # This is the standard, secure way to provide credentials.
-                api_key = os.getenv("WANDB_API_KEY")
-
                 run_name = os.getenv("WANDB_RUN_NAME", 'resnet18_tmm_v1')
                 wandb_dir = work_dir.rstrip("/")
-
-                # --- MODIFIED: Pass the key to wandb.init ---
-                # If api_key is None, wandb uses its default login (like the colleague's).
-                # If you set WANDB_API_KEY, this 'key' argument will force wandb
-                # to use YOUR account for this run only.
-                wandb.init(project=proj, name=run_name, dir=wandb_dir, key=api_key)
+                
+                # --- CORRECTED: No 'key' argument needed ---
+                # wandb.init() will automatically find and use the
+                # WANDB_API_KEY environment variable if you set it.
+                wandb.init(project=proj, name=run_name, dir=wandb_dir)
+                # --- End correction ---
 
                 self.wandb = wandb
                 self.print_log(f"[wandb] initialized project={proj} name={run_name}", print_time=False)
-
-                if api_key:
+                
+                # This check confirms if you are logged in via your key
+                if os.getenv("WANDB_API_KEY"):
                     self.print_log("[wandb] using API key from WANDB_API_KEY.", print_time=False)
                 else:
                     self.print_log("[wandb] using default login (no WANDB_API_KEY found).", print_time=False)
