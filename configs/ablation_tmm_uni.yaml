@@ -2,7 +2,7 @@
 # Only keys you want to override from baseline.yaml
 
 dataset_info:
-  dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner/
+  dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
 
 model_args:
   # TMM toggles
