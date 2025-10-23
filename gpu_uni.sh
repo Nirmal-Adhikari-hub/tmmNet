@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export CUDA_VISIBLE_DEVICES=1      # ← pin to the *other* GPU at the OS level
+export WANDB_API_KEY="your_wandb_api_key_here"
+
+export CUDA_VISIBLE_DEVICES=0      # ← pin to the *other* GPU at the OS level
 # --device "0" # <-- IMPORTANT: 0 means “the *first* visible GPU” (which is physical 1)
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
