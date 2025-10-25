@@ -2,14 +2,14 @@
 set -euo pipefail
 
 export CUDA_VISIBLE_DEVICES=0
-RUN=output/resnet34_tmm_v1_enable_motionTrue_preLstm_TMMalpha1_$(date +%Y%m%d_%H%M%S)
+RUN=output/resnet18_tmm_v2_preLstm_phaseLoss_$(date +%Y%m%d_%H%M%S)
 mkdir -p "$RUN"                          # ← create the folder before tee
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
 
-export WANDB_RUN_NAME="resnet34_tmm_v1_enable_motionTrue_preLstm_TMMalpha1"
+export WANDB_RUN_NAME="resnet18_tmm_v2_preLstm_phaseLoss"
 # export WANDB_RESUME=never
 
 python main.py \

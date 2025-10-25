@@ -1,17 +1,48 @@
 # configs/ablation_tmm.yaml
 # Only keys you want to override from baseline.yaml
 
-model_args:
-  # TMM toggles
-  enable_tmm: true
-  tmm_location: "pre_bilstm"   # or "pre_bilstm"
-  tmm_alpha: 1
-  enable_motion: true
-
+# keep your existing dataset/optimizer unless you want to change them
 loss_weights:
   SeqCTC: 1.0
   ConvCTC: 1.0
-  Dist: 25.0        # KD conv->seq stays as in baseline
+  Dist: 25.0
+  Blank: 0.10      # L_blank on
+  Phase: 0.30      # L_phase  on
+
+model: slr_network.SLRModel
+model_args:
+  # backbone
+  c2d_type: resnet18
+  conv_type: 2
+  use_bn: 1
+  share_classifier: True
+  weight_norm: True
+  use_graph: False
+
+  # TMM settings
+  enable_tmm: True
+  tmm_location: pre_bilstm
+
+  # α warm start: identity → target over warmup epochs
+  tmm_alpha: 1.0
+  tmm_alpha_final: 0.2
+  tmm_alpha_warmup_epochs: 5
+
+  # motion cue (3D lightweight stem)
+  enable_motion: True
+  motion3d_enable: True
+  motion3d_base_channels: 32
+  motion3d_blocks: 2
+
+  # gate ↔ blank coupling + usage prior
+  gate_tau: 0.7
+  gate_soft: 0.1
+  gate_usage_prior: 0.15
+
+  blank_index: 0   # Phoenix blank index=0 (keep as in your code)
+
+# keep your current optimizer schedule, epochs, batch sizes
+
 
 # Optional: try greedy if you expose decode_mode in code
 # decode_mode: "beam"  # or "max"

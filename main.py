@@ -102,6 +102,21 @@ class Processor():
                 save_model = epoch % self.arg.save_interval == 0
                 eval_model = epoch % self.arg.eval_interval == 0
                 epoch_time = time.time()
+
+                # ---- set alpha warm-start on the real module ----
+                try:
+                    m = _unwrap(self.model)
+                    if hasattr(m, "set_alpha_by_epoch"):
+                        m.set_alpha_by_epoch(epoch)
+                        # log alpha once per epoch
+                        a = float(m.tmm.alpha) if (hasattr(m, "tmm") and m.tmm is not None) else float('nan')
+                        if is_main_process():
+                            self.recoder.log_metrics({"epoch": epoch, "train_epoch/tmm_alpha": a})
+                            self.recoder.print_log(f"[alpha] epoch {epoch}: alpha={a:.4f}", print_time=False)
+                except Exception:
+                    pass
+
+                
                 seq_train(self.data_loader['train'], self.model, self.optimizer,
                           self.device, epoch, self.recoder)
                 dev_wer={}

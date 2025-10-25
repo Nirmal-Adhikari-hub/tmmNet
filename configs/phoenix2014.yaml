@@ -5,9 +5,9 @@
 
 
 
-# dataset_root: /mnt/data/phoenix-2014/phoenix-2014-multisigner
+dataset_root: /mnt/data/phoenix-2014/phoenix-2014-multisigner
 
-dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
+# dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner
 
 # dataset_root: /shared/home/xvoice/nirmal/SlowFastSign/dataset/phoenix2014/phoenix-2014-multisigner # RVRT delburred dataset
 # dataset_root: /raid/xvoice/nirmal/dataset/phoenix-2014-multisigner

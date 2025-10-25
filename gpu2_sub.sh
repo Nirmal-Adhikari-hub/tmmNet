@@ -7,13 +7,12 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
-export WANDB_RUN_NAME="resnet18_MotionDiffLearnHuge_tmm_v1_enable_motionTrue_preLstm_TMMalpha1"
+export WANDB_RUN_NAME="resnet18_baseline"
 export WANDB_RESUME=never
 
-RUN=output/resnet18_MotionDiffLearnHuge_tmm_v1_enable_motionTrue_preLstm_TMMalpha1_$(date +%Y%m%d_%H%M%S)
+RUN=output/resnet18_baseline$(date +%Y%m%d_%H%M%S)
 mkdir -p "$RUN"
 
 python main.py \
-  --ablation_cfg configs/ablation_tmm_gpu1_sub.yaml \
   --work-dir "$RUN" \
   2>&1 | tee "$RUN/train.log"

@@ -9,10 +9,10 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
-export WANDB_RUN_NAME="resnet18_MotionDiffLearnHuge_tmm_v1_enable_motionTrue_preLstm_TMMalpha0"
+export WANDB_RUN_NAME="resnet18_tmm_v2_noMotionCue_PhaseLoss"
 export WANDB_RESUME=never
 
-RUN=output/resnet18_MotionDiffLearnHuge_tmm_v1_enable_motionTrue_preLstm_TMMalpha0_$(date +%Y%m%d_%H%M%S)
+RUN=output/resnet18_tmm_v2_noMotionCue_PhaseLoss_$(date +%Y%m%d_%H%M%S)
 mkdir -p "$RUN"
 
 python main.py \
