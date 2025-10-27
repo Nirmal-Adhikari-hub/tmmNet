@@ -6,13 +6,13 @@ loss_weights:
   SeqCTC: 1.0
   ConvCTC: 1.0
   Dist: 25.0
-  Blank: 0.10      # L_blank on
-  Phase: 0.30      # L_phase  off
+  Blank: 0.0 # 0.10      # L_blank on
+  Phase: 0.0 # 0.30      # L_phase  off
 
 model: slr_network.SLRModel
 model_args:
   # backbone
-  c2d_type: resnet18
+  c2d_type: resnet34
   conv_type: 2
   use_bn: 1
   share_classifier: True
@@ -20,13 +20,13 @@ model_args:
   use_graph: False
 
   # TMM settings
-  enable_tmm: True
-  tmm_location: pre_bilstm
+  enable_tmm: False
+  # tmm_location: pre_bilstm
 
   # α warm start: identity → target over warmup epochs
-  tmm_alpha: 1.0
-  tmm_alpha_final: 0.2
-  tmm_alpha_warmup_epochs: 5
+  # tmm_alpha: 1.0
+  # tmm_alpha_final: 0.2
+  # tmm_alpha_warmup_epochs: 5
 
   # motion cue (3D lightweight stem)
   enable_motion: False
@@ -35,11 +35,11 @@ model_args:
   motion3d_blocks: None # 2
 
   # gate ↔ blank coupling + usage prior
-  gate_tau: 0.7
-  gate_soft: 0.1
-  gate_usage_prior: 0.15
+  # gate_tau: 0.7
+  # gate_soft: 0.1
+  # gate_usage_prior: 0.15
 
-  blank_index: 0   # Phoenix blank index=0 (keep as in your code)
+  # blank_index: 0   # Phoenix blank index=0 (keep as in your code)
 
 # keep your current optimizer schedule, epochs, batch sizes
 
@@ -57,4 +57,4 @@ model_args:
 # To checkpoint models based on this metric score. 
 # Original code selected the best WER among the 
 # current epoch's Conv or LSTM WER. "best" is original/default
-select_metric: "lstm" # "conv", "lstm", "best" 
+# select_metric: "lstm" # "conv", "lstm", "best" 
